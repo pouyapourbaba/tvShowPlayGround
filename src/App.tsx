@@ -1,22 +1,16 @@
 import React from "react";
-import axios from "axios";
 import SearchShow from "./components/SearchShow";
+import styles from "./App.module.css";
 
 function App() {
-  const url = " http://api.tvmaze.com/search/shows?q=peaky";
-
-  const fetchShows = async () => {
-    const res = await axios.get(url);
-    const shows = res.data
-    // shows.map(show => console.log("shows ", show.show.name))
-    
-  };
-
-  fetchShows()
   return (
-    <div className="App">
-      <h1>Shows</h1>
-      <SearchShow></SearchShow>
+    <div className={styles["App"]}>
+      <header>
+        <h1>Search for TV Shows</h1>
+      </header>
+      <main>
+        <SearchShow />
+      </main>
     </div>
   );
 }
