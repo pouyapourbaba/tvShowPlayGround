@@ -1,11 +1,12 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { IShow } from "../interfaces/interfaces";
 import styles from "../styles/MovieCard.module.css";
 
 export interface MovieCardProps {
   searchResult: IShow[];
   favorites: IShow[];
-  toggleFavorite: any
+  toggleFavorite: any;
 }
 
 const MovieCard: React.SFC<MovieCardProps> = ({
@@ -13,14 +14,15 @@ const MovieCard: React.SFC<MovieCardProps> = ({
   favorites,
   toggleFavorite
 }): JSX.Element => {
-  
   return (
     <div className={styles["movies"]}>
       {searchResult.map((show: IShow) => (
         <div key={show.id} className={styles["movie"]}>
           <section className={styles["information"]}>
             <div className={styles["title-favorite"]}>
-              <h3>{show.name}</h3>
+              <h3>
+                <Link to={`/movies/${show.id}`}>{show.name}</Link>
+              </h3>
               <button
                 type="button"
                 style={

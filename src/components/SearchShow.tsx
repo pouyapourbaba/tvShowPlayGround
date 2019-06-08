@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
 import ReactHtmlParser from "react-html-parser";
 import { IShow, IResponse } from "../interfaces/interfaces";
 import styles from "../styles/SearchShow.module.css";
@@ -48,13 +47,11 @@ const SearchShow = (): JSX.Element => {
         />
         <button type="submit">Search</button>
       </form>
-      <Link to="/movie">
         <MovieCard
           searchResult={searchResult}
           favorites={favorites}
           toggleFavorite={toggleFavorite}
         />
-      </Link>
     </div>
   );
 };

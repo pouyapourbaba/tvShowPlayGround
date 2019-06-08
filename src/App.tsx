@@ -1,22 +1,23 @@
 import React from "react";
+import { Switch, Route, Redirect } from "react-router-dom";
+import styles from "./App.module.css";
 import SearchShow from "./components/SearchShow";
 import Favorites from "./components/Favorites";
-import styles from "./App.module.css";
-import { Switch, Route } from "react-router-dom";
 import MovieDetail from "./components/MovieDetail";
-
+import Navbar from "./components/Navbar";
 
 function App() {
   return (
     <div className={styles["App"]}>
       <header>
-        <h1>Search for TV Shows</h1>
+        <Navbar />
       </header>
       <main>
         <Switch>
           <Route path="/favorites" component={Favorites} />
-          <Route path="/movie" component={MovieDetail} />
-          <Route exact path="/" component={SearchShow}/>
+          <Route path="/movies/:id" component={MovieDetail} />
+          <Route exact path="/" component={SearchShow} />
+          <Redirect to="/not-found"/>
         </Switch>
       </main>
     </div>

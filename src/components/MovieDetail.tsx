@@ -1,11 +1,10 @@
-import React from 'react';
+import React from "react";
+import { RouteComponentProps } from "react-router-dom";
 
-export interface MovieDetailProps {
-    
-}
- 
-const MovieDetail: React.SFC<MovieDetailProps> = () => {
-    return ( <div>Movie Detail</div> );
-}
- 
+type TParams = { id: string };
+
+const MovieDetail = (props: RouteComponentProps<TParams>) => {
+  return <div>Movie {props.match.params.id}</div>;
+};
+
 export default MovieDetail;
