@@ -1,6 +1,9 @@
 import React from "react";
 import SearchShow from "./components/SearchShow";
+import Favorites from "./components/Favorites";
 import styles from "./App.module.css";
+import { Switch, Route } from "react-router-dom";
+
 
 function App() {
   return (
@@ -9,7 +12,10 @@ function App() {
         <h1>Search for TV Shows</h1>
       </header>
       <main>
-        <SearchShow />
+        <Switch>
+          <Route path="/favorites" component={Favorites} />
+          <Route exact path="/" component={SearchShow}/>
+        </Switch>
       </main>
     </div>
   );
