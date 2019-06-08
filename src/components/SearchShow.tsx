@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import ReactHtmlParser from "react-html-parser";
 import { IShow, IResponse } from "../interfaces/interfaces";
 import styles from "../styles/SearchShow.module.css";
+import MovieCard from "./MovieCard";
 
 type FormElem = React.FormEvent<HTMLFormElement>;
 type ChangeEvent = React.ChangeEvent<HTMLInputElement>;
@@ -27,13 +29,13 @@ const SearchShow = (): JSX.Element => {
   };
 
   const toggleFavorite = (show: IShow): void => {
-    if(favorites.includes(show)) setFavorite(favorites.filter(s => s.id !== show.id))
-    else setFavorite([...favorites, show])
-    
+    if (favorites.includes(show))
+      setFavorite(favorites.filter(s => s.id !== show.id));
+    else setFavorite([...favorites, show]);
   };
 
-  console.log(searchResult);
-  console.log(favorites)
+  // console.log(searchResult);
+  // console.log(favorites);
   return (
     <div>
       <form onSubmit={handleSubmit} className={styles["search-form"]}>
@@ -46,30 +48,13 @@ const SearchShow = (): JSX.Element => {
         />
         <button type="submit">Search</button>
       </form>
-      <div className={styles["search-results"]}>
-        {searchResult.map((show: IShow) => (
-          <div key={show.id} className={styles["search-result"]}>
-            <section className={styles["information"]}>
-              <div className={styles["title-favorite"]}>
-                <h3>{show.name}</h3>
-                <button type="button" style={favorites.includes(show) ? {backgroundColor: "rgb(122, 244, 66)"} : {backgroundColor: "white"}} onClick={() => toggleFavorite(show)}>
-                  Favorite
-                </button>
-              </div>
-              {show.rating.average ? (
-                <h4>Rating: {show.rating.average}</h4>
-              ) : (
-                <h4>Status: {show.status}</h4>
-              )}
-            </section>
-            {show.image && (
-              <div className="image">
-                <img src={show.image.medium} alt="" />
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
+      <Link to="/movie">
+        <MovieCard
+          searchResult={searchResult}
+          favorites={favorites}
+          toggleFavorite={toggleFavorite}
+        />
+      </Link>
     </div>
   );
 };

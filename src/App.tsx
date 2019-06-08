@@ -3,6 +3,7 @@ import SearchShow from "./components/SearchShow";
 import Favorites from "./components/Favorites";
 import styles from "./App.module.css";
 import { Switch, Route } from "react-router-dom";
+import MovieDetail from "./components/MovieDetail";
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
       <main>
         <Switch>
           <Route path="/favorites" component={Favorites} />
+          <Route path="/movie" component={MovieDetail} />
           <Route exact path="/" component={SearchShow}/>
         </Switch>
       </main>
