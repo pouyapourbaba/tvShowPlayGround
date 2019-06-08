@@ -1,4 +1,4 @@
-export interface IShow {
+export interface IResponse {
   score: number;
   show: {
     externals: {
@@ -33,4 +33,38 @@ export interface IShow {
     webChannel: any;
     weight: number;
   };
+}
+
+export interface IShow {
+    externals: {
+      tvrage: number;
+      thetvdb: number;
+      imdb: string;
+    };
+    genres: string[];
+    id: number;
+    image: { medium: string; original: string };
+    language: string;
+    name: string;
+    network: {
+      id: number;
+      name: string;
+      country: {
+        code: string;
+        name: string;
+        timezone: string;
+      };
+    };
+    officialSite: any;
+    premiered: string;
+    rating: { average: number };
+    runtime: number;
+    schedule: { time: string; days: string[] };
+    status: string;
+    summary: string;
+    type: string;
+    updated: number;
+    url: string;
+    webChannel: any;
+    weight: number;
 }

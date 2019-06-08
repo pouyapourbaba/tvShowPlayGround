@@ -69,6 +69,38 @@
   flex: 1 1 100%;
 }
 
+.title-favorite {
+  display: flex;
+  align-items: center
+}
+
+.title-favorite h3 {
+  flex: 1 1 70%;
+}
+
+.title-favorite button {
+  flex: 1 1 30%;
+  height: 30px;
+  border: none;
+  background-color: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.title-favorite button:hover
+/* .title-favorite button:active, */
+
+  {
+  background-color: #eee;
+  border: none;
+  outline: none;
+}
+.title-favorite button:focus {
+  background-color: #fff;
+  border: none;
+  outline: none;
+}
+
 @media only screen and (max-width: 448px) {
   .search-form {
     margin-bottom: 70px;
