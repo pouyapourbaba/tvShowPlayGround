@@ -5,7 +5,7 @@ export interface AppContextInterface {
     favorites: [];
 }
 
-interface AppActionInterface {
+export interface AppActionInterface {
     type: string;
     payload: any;
 }
@@ -20,13 +20,13 @@ export const Context = React.createContext<AppContextInterface | any>(sampleAppC
 export const AppContextProvider = Context.Provider;
 export const AppContextConsumer = Context.Consumer;
 
-
-// Reducer
-export function reducer(state: AppContextInterface, action: AppActionInterface) {
+export const reducer = (state: AppContextInterface, action: AppActionInterface): AppContextInterface => {
     switch (action.type) {
-        case "SEARCH_MOVIES":
+        case "SEARCH_MOVIE":
             return { ...state, movies: action.payload }
-        default:
-            return state
+        case "TOGGLE_FAVORITE":
+            return { ...state, favorites: action.payload }
+        default: 
+            return state;
     }
 }

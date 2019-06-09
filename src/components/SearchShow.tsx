@@ -4,56 +4,50 @@ import ReactHtmlParser from "react-html-parser";
 import { IShow, IResponse } from "../interfaces/interfaces";
 import styles from "../styles/SearchShow.module.css";
 import MovieCard from "./MovieCard";
-import { Context } from "../Store";
+import { Context, AppActionInterface } from "./../Store";
 
 type FormElem = React.FormEvent<HTMLFormElement>;
 type ChangeEvent = React.ChangeEvent<HTMLInputElement>;
 
 const SearchShow = (): JSX.Element => {
   const [searchInput, setSearchInput] = useState<string>("");
-  const [searchResult, setSearchResult] = useState<IShow[]>([]);
-  const [favorites, setFavorite] = useState<IShow[]>([]);
+  const { state, dispatch } = React.useContext(Context);
 
   const handleChange = (e: ChangeEvent): void => {
     setSearchInput(e.target.value);
   };
 
-  const handleSubmit = async (e: FormElem) => {
+  const toggleFavorite = (show: IShow): AppActionInterface => {
+    if (state.favorites.includes(show)) {
+      return dispatch({
+        type: "TOGGLE_FAVORITE",
+        payload: state.favorites.filter((s: IShow) => s.id !== show.id)
+      });
+    } else {
+      return dispatch({
+        type: "TOGGLE_FAVORITE",
+        payload: [...state.favorites, show]
+      });
+    }
+  };
+
+  const handleSearchMovies = async (e: FormElem) => {
     e.preventDefault();
-    const url = `http://api.tvmaze.com/search/shows?q=${searchInput}`;
-    const res = await axios.get(url);
-    const shows = res.data;
-    const justShows = shows.map((show: IResponse) => show.show);
-    setSearchResult(justShows);
-    setSearchInput("");
-  };
 
-  const toggleFavorite = (show: IShow): void => {
-    if (favorites.includes(show))
-      setFavorite(favorites.filter(s => s.id !== show.id));
-    else setFavorite([...favorites, show]);
-  };
-
-  // console.log(searchResult);
-  // console.log(favorites);
-
-  const [state, dispatch] = React.useContext(Context);
-
-  const fetchSearchMovies = async () => {
     const url = `http://api.tvmaze.com/search/shows?q=${searchInput}`;
     const response = await axios.get(url);
-    const results = await response.data;
-    const movies = results.show;
-    console.log("movies ", movies);
+    const results = response.data;
+    const movies = results.map((result: IResponse) => result.show);
+
     return dispatch({
-      type: "SEARCH_MOVIES",
+      type: "SEARCH_MOVIE",
       payload: movies
     });
   };
 
   return (
     <div>
-      <form onSubmit={handleSubmit} className={styles["search-form"]}>
+      <form onSubmit={handleSearchMovies} className={styles["search-form"]}>
         <input
           type="text"
           onChange={handleChange}
@@ -64,8 +58,8 @@ const SearchShow = (): JSX.Element => {
         <button type="submit">Search</button>
       </form>
       <MovieCard
-        searchResult={searchResult}
-        favorites={favorites}
+        searchResult={state.movies}
+        favorites={state.favorites}
         toggleFavorite={toggleFavorite}
       />
     </div>
