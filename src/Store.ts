@@ -1,8 +1,9 @@
 import React from "react";
+import { IShow } from "./interfaces/interfaces";
 
 export interface AppContextInterface {
     movies: [];
-    favorites: [];
+    favorites: []
 }
 
 export interface AppActionInterface {
