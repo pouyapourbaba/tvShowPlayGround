@@ -4,6 +4,7 @@ import ReactHtmlParser from "react-html-parser";
 import { IShow, IResponse } from "../interfaces/interfaces";
 import styles from "../styles/SearchShow.module.css";
 import MovieCard from "./MovieCard";
+import { Context } from "../Store";
 
 type FormElem = React.FormEvent<HTMLFormElement>;
 type ChangeEvent = React.ChangeEvent<HTMLInputElement>;
@@ -35,6 +36,21 @@ const SearchShow = (): JSX.Element => {
 
   // console.log(searchResult);
   // console.log(favorites);
+
+  const [state, dispatch] = React.useContext(Context);
+
+  const fetchSearchMovies = async () => {
+    const url = `http://api.tvmaze.com/search/shows?q=${searchInput}`;
+    const response = await axios.get(url);
+    const results = await response.data;
+    const movies = results.show;
+    console.log("movies ", movies);
+    return dispatch({
+      type: "SEARCH_MOVIES",
+      payload: movies
+    });
+  };
+
   return (
     <div>
       <form onSubmit={handleSubmit} className={styles["search-form"]}>
@@ -47,11 +63,11 @@ const SearchShow = (): JSX.Element => {
         />
         <button type="submit">Search</button>
       </form>
-        <MovieCard
-          searchResult={searchResult}
-          favorites={favorites}
-          toggleFavorite={toggleFavorite}
-        />
+      <MovieCard
+        searchResult={searchResult}
+        favorites={favorites}
+        toggleFavorite={toggleFavorite}
+      />
     </div>
   );
 };
