@@ -5,15 +5,13 @@ import SearchShow from "./components/SearchShow";
 import Favorites from "./components/Favorites";
 import MovieDetail from "./components/MovieDetail";
 import Navbar from "./components/Navbar";
-import {
-  AppContextProvider,
-  AppContextInterface,
-  reducer
-} from "./Store";
+import { AppContextProvider, AppContextInterface, reducer } from "./Store";
+import "font-awesome/css/font-awesome.css";
 
 const initialState: AppContextInterface = {
   movies: [],
-  favorites: []
+  favorites: [],
+  selectedMovie: {}
 };
 
 function App(): JSX.Element {
@@ -33,6 +31,9 @@ function App(): JSX.Element {
             <Redirect to="/not-found" />
           </Switch>
         </main>
+        <footer>
+          <p>&copy; Pouya Pourbaba</p>
+        </footer>
       </div>
     </AppContextProvider>
   );

@@ -1,11 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { IShow } from "../interfaces/interfaces";
+import { MovieInterface } from "../types/interfaces";
 import styles from "../styles/MovieCard.module.css";
+import { Context } from "./../Store";
 
 export interface MovieCardProps {
-  searchResult: IShow[];
-  favorites: IShow[];
+  searchResult: MovieInterface[];
+  favorites: MovieInterface[];
   toggleFavorite: any;
 }
 
@@ -14,25 +15,38 @@ const MovieCard: React.SFC<MovieCardProps> = ({
   favorites,
   toggleFavorite
 }): JSX.Element => {
+  const { state, dispatch } = React.useContext(Context);
+  const setSelectedMovie = (show: MovieInterface) => {
+    dispatch({
+      type: "SET_SELECTED_MOVIE",
+      payload: show
+    });
+  };
+
   return (
     <div className={styles["movies"]}>
-      {searchResult.map((show: IShow) => (
+      {searchResult.map((show: MovieInterface) => (
         <div key={show.id} className={styles["movie"]}>
           <section className={styles["information"]}>
             <div className={styles["title-favorite"]}>
               <h3>
-                <Link to={`/movies/${show.id}`}>{show.name}</Link>
+                <Link
+                  to={`/movies/${show.id}`}
+                  onClick={() => setSelectedMovie(show)}
+                >
+                  {show.name}
+                </Link>
               </h3>
               <button
                 type="button"
                 style={
                   favorites.includes(show)
-                    ? { backgroundColor: "rgb(122, 244, 66)" }
+                    ? { backgroundColor: "#3d3d3d", color: "#fff" }
                     : { backgroundColor: "white" }
                 }
                 onClick={() => toggleFavorite(show)}
               >
-                Favorite
+                <i className="fa fa-star" />
               </button>
             </div>
             {show.rating.average ? (
@@ -43,7 +57,12 @@ const MovieCard: React.SFC<MovieCardProps> = ({
           </section>
           {show.image && (
             <div className="image">
-              <img src={show.image.medium} alt="" />
+              <Link
+                to={`/movies/${show.id}`}
+                onClick={() => setSelectedMovie(show)}
+              >
+                <img src={show.image.medium} alt="" />
+              </Link>
             </div>
           )}
         </div>

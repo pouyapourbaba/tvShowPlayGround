@@ -1,16 +1,32 @@
 import React from "react";
+import _ from "lodash";
+import ReactHtmlParser from "react-html-parser";
 import { RouteComponentProps } from "react-router-dom";
 import { Context } from "./../Store";
-import { IShow } from "../interfaces/interfaces";
+import styles from "../styles/MovieDetail.module.css";
 
 type TParams = { id: string };
 
 const MovieDetail = (props: RouteComponentProps<TParams>) => {
   const { state, dispatch } = React.useContext(Context);
-  const id = parseInt(props.match.params.id);
-  const movie = state.movies.find((movie: IShow) => movie.id == id)
- console.log("movie ", movie);
-  return <div>Movie {movie.name}</div>;
+  const movie = state.selectedMovie;
+
+  // If no movieis selected
+  if (_.isEmpty(movie)) {
+    props.history.replace("/");
+    return <div />;
+  }
+
+  return (
+    <div className={styles["content"]}>
+      <h1>{movie.name}</h1>
+      <img src={movie.image.original} alt="" />
+      <div className={styles["summary"]}>
+        <h3>Summary:</h3>
+        {ReactHtmlParser(movie.summary)}
+      </div>
+    </div>
+  );
 };
 
 export default MovieDetail;

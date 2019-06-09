@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
-import ReactHtmlParser from "react-html-parser";
-import { IShow, IResponse } from "../interfaces/interfaces";
+import _ from "lodash";
+import ReactHtmlParser from "react-html-parser"
+import { MovieInterface, ResponseInterface } from "../types/interfaces";
 import styles from "../styles/SearchShow.module.css";
 import MovieCard from "./MovieCard";
 import { Context, AppActionInterface } from "./../Store";
+import Favorites from './Favorites';
 
 type FormElem = React.FormEvent<HTMLFormElement>;
 type ChangeEvent = React.ChangeEvent<HTMLInputElement>;
@@ -17,11 +19,11 @@ const SearchShow = (): JSX.Element => {
     setSearchInput(e.target.value);
   };
 
-  const toggleFavorite = (show: IShow): AppActionInterface => {
+  const toggleFavorite = (show: MovieInterface): AppActionInterface => {
     if (state.favorites.includes(show)) {
       return dispatch({
         type: "TOGGLE_FAVORITE",
-        payload: state.favorites.filter((s: IShow) => s.id !== show.id)
+        payload: state.favorites.filter((s: MovieInterface) => s.id !== show.id)
       });
     } else {
       return dispatch({
@@ -37,7 +39,12 @@ const SearchShow = (): JSX.Element => {
     const url = `http://api.tvmaze.com/search/shows?q=${searchInput}`;
     const response = await axios.get(url);
     const results = response.data;
-    const movies = results.map((result: IResponse) => result.show);
+    const movies = results.map((result: ResponseInterface) => result.show);
+    setSearchInput("");
+
+    if(_.isEmpty(movies)) {
+      console.log("<h3>No Movies Found...</h3>")
+    }
 
     return dispatch({
       type: "SEARCH_MOVIE",
@@ -46,7 +53,7 @@ const SearchShow = (): JSX.Element => {
   };
 
   return (
-    <div>
+    <div className={styles["form-container"]}>
       <form onSubmit={handleSearchMovies} className={styles["search-form"]}>
         <input
           type="text"

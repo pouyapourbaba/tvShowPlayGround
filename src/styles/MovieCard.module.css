@@ -7,17 +7,18 @@
 }
 
 .movie {
-  flex: 1 1 30%;
+  flex: 1 1 25%;
   display: flex;
   flex-flow: row wrap;
   margin: 20px 10px;
+  padding: 25px;
   border-radius: 8px;
   font-family: "Montserrat", sans-serif;
   justify-content: center;
   background-color: rgb(255, 238, 0);
 }
 .movie .information {
-  flex: 1 1 50%;
+  flex: 1 1 40%;
   padding: 0 14px;
 }
 .movie .imgage img {
@@ -29,24 +30,31 @@
   align-items: center;
 }
 
+.title-favorite a {
+  text-decoration: none;
+  color: #555
+}
+
+.title-favorite a:hover {
+  color: #000
+}
+
 .title-favorite h3 {
   flex: 1 1 70%;
 }
 
 .title-favorite button {
-  flex: 1 1 30%;
+  flex: 1 1 10px;
   height: 30px;
   border: none;
   background-color: #fff;
-  border-radius: 8px;
+  border-radius: 4px;
   cursor: pointer;
 }
 
-.title-favorite button:hover
-  /* .title-favorite button:active, */
-  
+.title-favorite button:hover  
  {
-  background-color: #eee;
+  background-color: rgb(226, 226, 226);
   border: none;
   outline: none;
 }

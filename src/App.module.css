@@ -19,9 +19,19 @@ body {
   text-align: center;
   background-color: rgb(255, 238, 0);
 }
+.App footer {
+  font-weight: 400;
+  flex: 1 1 70px;
+  width: 100vw;
+  color: #ddd;
+  justify-content: center;
+  text-align: center;
+  background-color: #333;
+}
 
 .App main {
   flex: 1 1 100%;
-  width: 80%;
-  margin-top: 20px;
+  width: 95%;
+  margin: 20px 0;
+  min-height: calc(100vh - 70px - 70px - 40px)
 }
