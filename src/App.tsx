@@ -5,8 +5,11 @@ import SearchShow from "./components/SearchShow";
 import Favorites from "./components/Favorites";
 import MovieDetail from "./components/MovieDetail";
 import Navbar from "./components/Navbar";
+import { Context } from "./Store";
 
-function App() {
+function App(): JSX.Element {
+  const store = React.useContext(Context);
+  console.log(store);
   return (
     <div className={styles["App"]}>
       <header>
@@ -17,7 +20,7 @@ function App() {
           <Route path="/favorites" component={Favorites} />
           <Route path="/movies/:id" component={MovieDetail} />
           <Route exact path="/" component={SearchShow} />
-          <Redirect to="/not-found"/>
+          <Redirect to="/not-found" />
         </Switch>
       </main>
     </div>
