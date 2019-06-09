@@ -1,0 +1,9 @@
+.content {
+  display: flex;  
+  flex-flow: column;
+  align-items: center;
+}
+
+.summary p{
+  text-align: justify;
+}

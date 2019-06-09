@@ -3,6 +3,7 @@ import React from "react";
 export interface AppContextInterface {
     movies: [];
     favorites: [];
+    selectedMovie: any;
 }
 
 export interface AppActionInterface {
@@ -10,12 +11,13 @@ export interface AppActionInterface {
     payload: any;
 }
 
-const sampleAppContext: AppContextInterface = {
+const initialState = {
     movies: [],
-    favorites: []
-};
+    favorites: [],
+    selectedMovie: {}
+}
 
-export const Context = React.createContext<AppContextInterface | any>(sampleAppContext);
+export const Context = React.createContext<AppContextInterface | any>(initialState);
 
 export const AppContextProvider = Context.Provider;
 export const AppContextConsumer = Context.Consumer;
@@ -26,7 +28,9 @@ export const reducer = (state: AppContextInterface, action: AppActionInterface):
             return { ...state, movies: action.payload }
         case "TOGGLE_FAVORITE":
             return { ...state, favorites: action.payload }
-        default: 
+        case "SET_SELECTED_MOVIE":
+            return { ...state, selectedMovie: action.payload }
+        default:
             return state;
     }
 }
