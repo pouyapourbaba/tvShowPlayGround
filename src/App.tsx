@@ -1,23 +1,40 @@
 import React from "react";
+import { Switch, Route, Redirect } from "react-router-dom";
+import styles from "./App.module.css";
 import SearchShow from "./components/SearchShow";
 import Favorites from "./components/Favorites";
-import styles from "./App.module.css";
-import { Switch, Route } from "react-router-dom";
+import MovieDetail from "./components/MovieDetail";
+import Navbar from "./components/Navbar";
+import {
+  AppContextProvider,
+  AppContextInterface,
+  reducer
+} from "./Store";
 
+const initialState: AppContextInterface = {
+  movies: [],
+  favorites: []
+};
 
-function App() {
+function App(): JSX.Element {
+  const [state, dispatch] = React.useReducer(reducer, initialState);
+  console.log("state: App ", state);
   return (
-    <div className={styles["App"]}>
-      <header>
-        <h1>Search for TV Shows</h1>
-      </header>
-      <main>
-        <Switch>
-          <Route path="/favorites" component={Favorites} />
-          <Route exact path="/" component={SearchShow}/>
-        </Switch>
-      </main>
-    </div>
+    <AppContextProvider value={{ state, dispatch }}>
+      <div className={styles["App"]}>
+        <header>
+          <Navbar />
+        </header>
+        <main>
+          <Switch>
+            <Route path="/favorites" component={Favorites} />
+            <Route path="/movies/:id" component={MovieDetail} />
+            <Route exact path="/" component={SearchShow} />
+            <Redirect to="/not-found" />
+          </Switch>
+        </main>
+      </div>
+    </AppContextProvider>
   );
 }
 
