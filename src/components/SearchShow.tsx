@@ -6,7 +6,7 @@ import { MovieInterface, ResponseInterface } from "../types/interfaces";
 import styles from "../styles/SearchShow.module.css";
 import MovieCard from "./MovieCard";
 import { Context, AppActionInterface } from "./../Store";
-import Favorites from './Favorites';
+import Favorites from './FavoritesSidebar';
 
 type FormElem = React.FormEvent<HTMLFormElement>;
 type ChangeEvent = React.ChangeEvent<HTMLInputElement>;
