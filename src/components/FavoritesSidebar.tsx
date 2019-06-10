@@ -4,6 +4,8 @@ import { MovieInterface } from "../types/interfaces";
 import styles from "../styles/FavoritesSidebar.module.css";
 import { AppActionInterface } from './../Store';
 
+console.log(styles)
+
 const FavoritesSidebar = (): JSX.Element => {
   const { state, dispatch } = React.useContext(Context);
   const toggleFavorite = (show: MovieInterface): AppActionInterface => {

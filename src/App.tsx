@@ -1,6 +1,6 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-import styles from "./App.module.css";
+import styles from "./App.module.scss";
 import SearchShow from "./components/SearchShow";
 import Favorites from "./components/FavoritesSidebar";
 import MovieDetail from "./components/MovieDetail";
