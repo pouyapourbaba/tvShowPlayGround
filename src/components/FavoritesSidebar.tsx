@@ -4,8 +4,6 @@ import { MovieInterface } from "../types/interfaces";
 import styles from "../styles/FavoritesSidebar.module.css";
 import { AppActionInterface } from './../Store';
 
-console.log(styles)
-
 const FavoritesSidebar = (): JSX.Element => {
   const { state, dispatch } = React.useContext(Context);
   const toggleFavorite = (show: MovieInterface): AppActionInterface => {
@@ -32,7 +30,7 @@ const FavoritesSidebar = (): JSX.Element => {
           </div>
           {fav.image && (
             <div className={styles["sidebar-moviecard-image"]}>
-              <img src={fav.image.medium} alt="" />
+              <img src={fav.image.original} alt="" />
             </div>
           )}
         </div>

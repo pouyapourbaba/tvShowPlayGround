@@ -4,6 +4,8 @@ export interface AppContextInterface {
     movies: [];
     favorites: [];
     selectedMovie: any;
+    searchQuery: string;
+    isSearchDone: boolean;
 }
 
 export interface AppActionInterface {
@@ -11,10 +13,12 @@ export interface AppActionInterface {
     payload: any;
 }
 
-const initialState = {
+const initialState: AppContextInterface = {
     movies: [],
     favorites: [],
-    selectedMovie: {}
+    selectedMovie: {},
+    searchQuery: "",
+    isSearchDone: false
 }
 
 export const Context = React.createContext<AppContextInterface | any>(initialState);
@@ -30,6 +34,8 @@ export const reducer = (state: AppContextInterface, action: AppActionInterface):
             return { ...state, favorites: action.payload }
         case "SET_SELECTED_MOVIE":
             return { ...state, selectedMovie: action.payload }
+        case "SET_SEARCH_QUERY":
+            return { ...state, searchQuery: action.payload }
         default:
             return state;
     }

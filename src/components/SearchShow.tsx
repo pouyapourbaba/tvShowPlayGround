@@ -1,7 +1,7 @@
 import React from "react";
 import _ from "lodash";
 import { MovieInterface, ResponseInterface } from "../types/interfaces";
-import MovieCard from "./MovieCard";
+import Movie from "./Movies";
 import { Context, AppActionInterface } from "./../Store";
 
 
@@ -23,7 +23,7 @@ const SearchShow = (): JSX.Element => {
   };
 
   return (
-      <MovieCard
+      <Movie
         searchResult={state.movies}
         favorites={state.favorites}
         toggleFavorite={toggleFavorite}
