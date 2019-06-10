@@ -1,4 +1,5 @@
 import React from "react";
+import { RouteComponentProps } from "react-router-dom";
 import axios from "axios";
 import _ from "lodash";
 import styles from "../styles/SearchForm.module.scss";
@@ -12,7 +13,7 @@ export interface SearchFormProps {
 type FormElem = React.FormEvent<HTMLFormElement>;
 type ChangeEvent = React.ChangeEvent<HTMLInputElement>;
 
-const SearchForm: React.SFC<SearchFormProps> = () => {
+const SearchForm: React.SFC<SearchFormProps> = props => {
   const [searchInput, setSearchInput] = React.useState<string>("");
   const { state, dispatch } = React.useContext(Context);
 
@@ -41,16 +42,29 @@ const SearchForm: React.SFC<SearchFormProps> = () => {
     const response = await axios.get(url);
     const results = response.data;
     const movies = results.map((result: ResponseInterface) => result.show);
-    setSearchInput("");
+    // setSearchInput("");
 
     if (_.isEmpty(movies)) {
       console.log("<h3>No Movies Found...</h3>");
     }
 
-    return dispatch({
+    // filter the movies without images
+    const filteredMovies = movies.filter(
+      (movie: MovieInterface) => movie.image !== null
+    );
+
+    dispatch({
       type: "SEARCH_MOVIE",
-      payload: movies
+      payload: filteredMovies
     });
+
+    dispatch({
+      type: "SET_SEARCH_QUERY",
+      payload: searchInput
+    });
+
+    // window.location.href = "/searched";
+    // props.history.push("")
   };
 
   return (

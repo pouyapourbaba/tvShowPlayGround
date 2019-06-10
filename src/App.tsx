@@ -2,6 +2,7 @@ import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import styles from "./App.module.scss";
 import SearchShow from "./components/SearchShow";
+import Home from "./components/Home";
 import Favorites from "./components/FavoritesSidebar";
 import MovieDetail from "./components/MovieDetail";
 import Navbar from "./components/Navbar";
@@ -11,7 +12,9 @@ import "font-awesome/css/font-awesome.css";
 const initialState: AppContextInterface = {
   movies: [],
   favorites: [],
-  selectedMovie: {}
+  selectedMovie: {},
+  searchQuery: "",
+  isSearchDone: false
 };
 
 function App(): JSX.Element {
@@ -26,6 +29,7 @@ function App(): JSX.Element {
         <main>
           <Switch>
             <Route path="/favorites" component={Favorites} />
+            <Route path="/:query" component={SearchShow} />
             <Route path="/movies/:id" component={MovieDetail} />
             <Route exact path="/" component={SearchShow} />
             <Redirect to="/not-found" />

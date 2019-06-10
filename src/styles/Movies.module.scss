@@ -1,0 +1,167 @@
+@import "./variables";
+// /*
+// * Search Results
+// */
+.content {
+  display: flex;
+}
+
+.favorites-sidebar {
+  background-color: #fff;
+  flex: 1 1 20%;
+  height: calc(100vh - 40px);
+  margin-top: 20px;
+  border-radius: 8px;
+  overflow: scroll;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 10px;
+  align-self: flex-start;
+}
+
+.movies {
+  // flex: 1 1 80%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+}
+
+.movie {
+  flex: 0 0 0%;
+  display: flex;
+  flex-flow: row wrap;
+  margin: 2px 2px;
+  font-family: "Montserrat", sans-serif;
+  justify-content: center;
+}
+.movie .information {
+  flex: 1 1 40%;
+  padding: 0 14px;
+}
+.movie .imgage img {
+  // flex: 1 1 100%;
+  // width: 100%;
+}
+
+.title-favorite {
+  display: flex;
+  align-items: center;
+}
+
+.title-favorite a {
+  text-decoration: none;
+  color: #555;
+}
+
+.title-favorite a:hover {
+  color: #000;
+}
+
+.title-favorite h3 {
+  flex: 1 1 70%;
+}
+
+.title-favorite button {
+  flex: 1 1 10px;
+  height: 30px;
+  border: none;
+  background-color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.title-favorite button:hover {
+  background-color: rgb(226, 226, 226);
+  border: none;
+  outline: none;
+}
+.title-favorite button:focus {
+  background-color: #fff;
+  border: none;
+  outline: none;
+}
+
+.favorites-sidebar {
+}
+
+
+
+// @media only screen and (min-width: 449px) and (max-width: 900px) {
+//   .search-form {
+//     margin-bottom: 20px;
+//   }
+//   .movie {
+//     margin: 20px 10px;
+//   }
+//   .movie .information {
+//     flex: 1 1 100%;
+//     padding: 0 14px;
+//   }
+//   .movie .image {
+//     flex: 0 0 100%;
+//   }
+// }
+
+//// NEW
+.movie {
+  position: relative;
+  z-index: 1;
+}
+
+.image {
+  position: relative;
+  text-align: left;
+  color: white;
+  width: 150px;
+
+  img {
+    width: 100%;
+  }
+
+  button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: $backgroundYellow;
+  }
+}
+
+.info {
+  position: absolute;
+  padding: 10px;
+  width: calc(100% - 20px);
+  bottom: 4px;
+  left: 0px;
+  background-color: rgba(0, 0, 0, 0.7);
+  font-weight: 400;
+  font-size: 12px;
+}
+
+.info > * {
+  padding: 0;
+  margin: 0;
+}
+
+@media only screen and (min-width: 768px) {
+  // .search-form {
+  //   margin-bottom: 70px;
+  // }
+  // .movie {
+  //   margin: 20px 10px;
+  // }
+  // .movie .information {
+  //   flex: 1 1 100%;
+  //   padding: 0 14px;
+  // }
+  // .movie .image {
+  //   flex: 0 0 100%;
+  // }
+
+  .image {
+    width: 250px;
+  
+    img {
+      width: 100%;
+    }
+  }
+}

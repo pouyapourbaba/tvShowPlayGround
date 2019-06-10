@@ -23,14 +23,16 @@ header {
   width: 100%;
   text-align: center;
   position: absolute;
+  z-index: 999;
 }
 
 main {
   grid-column: 2 / 12;
-  background-color: #4d4d4d;
+  background-color: $backgroundLightYello;
+  border: 1px solid rgb(212, 212, 212);
   margin-top: 100px;
-  margin-bottom: 10px;
-  min-height: calc(100vh - 70px);
+  margin-bottom: 20px;
+  min-height: calc(100vh - 192px);
 }
 
 footer {
