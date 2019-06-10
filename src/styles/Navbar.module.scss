@@ -22,7 +22,7 @@
 .nav-toggle-label span::after {
   display: block;
   background: white;
-  height:2px;
+  height: 2px;
   width: 2em;
   border-radius: 2px;
   position: relative;
@@ -73,7 +73,7 @@ nav li {
 }
 
 .nav-toggle:checked ~ nav {
-  transform: scale(1, 1)
+  transform: scale(1, 1);
 }
 
 .nav-toggle:checked ~ nav .nav-item {
@@ -83,15 +83,15 @@ nav li {
 
 .brand {
   text-decoration: none;
-  color: #111;
+  color: rgb(255, 255, 255);
 }
 
 .nav-item:hover {
-  color: #000;
+  color: rgb(182, 182, 182);
 }
 
 .nav-item:focus {
-    color: #111
+  color: rgb(156, 56, 56);
 }
 
 @media screen and (min-width: 768px) {
@@ -118,6 +118,11 @@ nav li {
     justify-content: flex-end;
     align-items: center;
   }
+
+  nav li {
+    margin-bottom: 0;
+  }
+
   .nav-item {
     opacity: 1;
     margin-left: 0.5em;

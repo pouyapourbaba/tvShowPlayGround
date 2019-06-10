@@ -41,6 +41,7 @@ const MovieCard: React.SFC<MovieCardProps> = ({
                 </h3>
                 <button
                   type="button"
+                  
                   style={
                     favorites.includes(show)
                       ? { backgroundColor: "#3d3d3d", color: "#fff" }
