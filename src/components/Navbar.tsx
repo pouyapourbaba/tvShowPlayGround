@@ -1,17 +1,48 @@
 import React from "react";
-import styles from "../styles/Navbar.module.css";
+import styles from "../styles/Navbar.module.scss";
 import { Link, NavLink } from "react-router-dom";
+import SearchForm from "./SearchForm";
+
 export interface NavbarProps {}
 
 const Navbar: React.SFC<NavbarProps> = (): JSX.Element => {
   return (
-    <nav className={styles["main-nav"]}>
-      <h1><Link className={styles["brand"]} to ="/">MoviEnd</Link></h1>
-      <div>
-        <NavLink className={styles["nav-item"]} activeClassName="active" to="/">Home</NavLink>
-        <NavLink className={styles["nav-item"]} activeClassName="active" to="/favorites">Favorites</NavLink>
-      </div>
-    </nav>
+    <div className={styles["nav-container"]}>
+      <h1>
+        <Link className={styles["brand"]} to="/">
+          MoviEnd
+        </Link>
+      </h1>
+      <input type="checkbox" id="nav-toggle" className={styles["nav-toggle"]} />
+      <nav>
+        <ul>
+          <li>
+            <SearchForm className={styles["search"]} />
+          </li>
+          <li>
+            <NavLink
+              className={styles["nav-item"]}
+              activeClassName="active"
+              to="/"
+            >
+              Home
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              className={styles["nav-item"]}
+              activeClassName="active"
+              to="/favorites"
+            >
+              Favorites
+            </NavLink>
+          </li>
+        </ul>
+      </nav>
+      <label htmlFor="nav-toggle" className={styles["nav-toggle-label"]}>
+        <span />
+      </label>
+    </div>
   );
 };
 

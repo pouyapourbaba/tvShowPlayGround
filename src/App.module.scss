@@ -1,0 +1,45 @@
+// fonts
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,600&display=swap");
+
+// import scss variables
+@import "styles/variables";
+
+body {
+  background-color: $backgroundGrey;
+  margin: 0;
+  padding: 0;
+  font-family: "Montserrat", sans-serif;
+}
+
+.App {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: 70px auto 70px;
+  font-weight: 600;
+}
+
+header {
+  background-color: $backgroundNavbar;
+  width: 100%;
+  text-align: center;
+  position: fixed;
+  z-index: 999;
+}
+
+main {
+  grid-column: 2 / 12;
+  background-color: #4d4d4d;
+  margin: 5px 0;
+  min-height: calc(100vh - 150px);
+}
+
+footer {
+  background-color: $backgroundDarkGrey;
+  grid-column: 1 / -1;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 400;
+}
+
