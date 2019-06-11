@@ -5,7 +5,6 @@ export interface AppContextInterface {
     favorites: [];
     selectedMovie: any;
     searchQuery: string;
-    isSearchDone: boolean;
 }
 
 export interface AppActionInterface {
@@ -17,8 +16,7 @@ const initialState: AppContextInterface = {
     movies: [],
     favorites: [],
     selectedMovie: {},
-    searchQuery: "",
-    isSearchDone: false
+    searchQuery: ""
 }
 
 export const Context = React.createContext<AppContextInterface | any>(initialState);

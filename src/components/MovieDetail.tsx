@@ -1,21 +1,24 @@
 import React from "react";
 import _ from "lodash";
+import axios from "axios";
 import ReactHtmlParser from "react-html-parser";
 import { RouteComponentProps } from "react-router-dom";
 import { Context } from "./../Store";
 import styles from "../styles/MovieDetail.module.css";
 
-type TParams = { id: string };
+type TParams = { id: any };
 
 const MovieDetail = (props: RouteComponentProps<TParams>) => {
-  const { state, dispatch } = React.useContext(Context);
+  const { state } = React.useContext(Context);
   const movie = state.selectedMovie;
 
-  // If no movieis selected
-  if (_.isEmpty(movie)) {
-    props.history.replace("/");
-    return <div />;
-  }
+  const getMovieDetailByImdbId = async (id: string) => {
+    const url = `http://api.tvmaze.com/lookup/shows?imdb=${id}`;
+    const response = await axios.get(url);
+    const results = response.data;
+  };
+
+  getMovieDetailByImdbId(props.match.params.id)
 
   return (
     <div className={styles["content"]}>
