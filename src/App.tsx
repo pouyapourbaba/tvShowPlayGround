@@ -1,9 +1,10 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
+import axios from "axios";
 import styles from "./App.module.scss";
 import SearchShow from "./components/SearchShow";
 import Home from "./components/Home";
-import Favorites from "./components/FavoritesSidebar";
+import Favorites from "./components/Favorites";
 import MovieDetail from "./components/MovieDetail";
 import Navbar from "./components/Navbar";
 import { AppContextProvider, AppContextInterface, reducer } from "./Store";
@@ -13,12 +14,12 @@ const initialState: AppContextInterface = {
   movies: [],
   favorites: [],
   selectedMovie: {},
-  searchQuery: "",
-  isSearchDone: false
+  searchQuery: ""
 };
 
 function App(): JSX.Element {
   const [state, dispatch] = React.useReducer(reducer, initialState);
+  console.log("state ", state);
 
   return (
     <AppContextProvider value={{ state, dispatch }}>

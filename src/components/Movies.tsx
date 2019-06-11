@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { MovieInterface } from "../types/interfaces";
 import styles from "../styles/Movies.module.scss";
 import { Context } from "../Store";
-import FavoritesSidebar from "./FavoritesSidebar";
+import FavoritesSidebar from "./Favorites";
 
 export interface MovieCardProps {
   searchResult: MovieInterface[];
@@ -33,7 +33,7 @@ const MovieCard: React.SFC<MovieCardProps> = ({
             {movie.image && (
               <div className={styles["image"]}>
                 <Link
-                  to={`/movies/${movie.id}`}
+                  to={`/movies/${movie.externals.imdb}`}
                   onClick={() => setSelectedMovie(movie)}
                 >
                   <img src={movie.image.medium} alt="" />
