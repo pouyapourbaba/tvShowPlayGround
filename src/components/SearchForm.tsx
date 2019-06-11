@@ -27,16 +27,16 @@ const SearchForm: React.SFC<SearchFormProps> = props => {
 
   const handleSearchMovies = async (e: FormElem) => {
     e.preventDefault();
-
+    
     const url = `http://api.tvmaze.com/search/shows?q=${searchInput}`;
     const response = await axios.get(url);
     const results = response.data;
     const movies = results.map((result: ResponseInterface) => result.show);
-    // setSearchInput("");
-
-    if (_.isEmpty(movies)) {
-      console.log("<h3>No Movies Found...</h3>");
-    }
+    setSearchInput("");
+    
+    // if (_.isEmpty(movies)) {
+    //   console.log("<h3>No Movies Found...</h3>");
+    // }
 
     // filter the movies without images
     const filteredMovies = movies.filter(
