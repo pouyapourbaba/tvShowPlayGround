@@ -6,6 +6,15 @@
   display: flex;
 }
 
+.search-result-number {
+  padding: 5px 15px;
+  margin-left: 30px;
+  background-color: $backgroundYellow;
+  display: inline-block;
+  color: #000;
+  border-radius: 4px;
+}
+
 .favorites-sidebar {
   background-color: #fff;
   flex: 1 1 20%;
@@ -21,9 +30,11 @@
 
 .movies {
   // flex: 1 1 80%;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-evenly;
+  // display: flex;
+  // flex-flow: row wrap;
+  // justify-content: space-evenly;display: grid;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
 }
 
 .movie {
@@ -83,8 +94,6 @@
 
 .favorites-sidebar {
 }
-
-
 
 // @media only screen and (min-width: 449px) and (max-width: 900px) {
 //   .search-form {
@@ -157,9 +166,14 @@
   //   flex: 0 0 100%;
   // }
 
+  .movies {
+    display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  }
+
   .image {
     width: 250px;
-  
+
     img {
       width: 100%;
     }

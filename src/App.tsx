@@ -19,7 +19,7 @@ const initialState: AppContextInterface = {
 
 function App(): JSX.Element {
   const [state, dispatch] = React.useReducer(reducer, initialState);
-  console.log("state: App ", state);
+
   return (
     <AppContextProvider value={{ state, dispatch }}>
       <div className={styles["App"]}>
@@ -29,9 +29,9 @@ function App(): JSX.Element {
         <main>
           <Switch>
             <Route path="/favorites" component={Favorites} />
-            <Route path="/:query" component={SearchShow} />
+            <Route path="/search/:query" component={SearchShow} />
             <Route path="/movies/:id" component={MovieDetail} />
-            <Route exact path="/" component={SearchShow} />
+            <Route exact path="/" component={Home} />
             <Redirect to="/not-found" />
           </Switch>
         </main>
