@@ -1,10 +1,12 @@
 import React from "react";
+import { MovieInterface } from "./types/interfaces";
 
 export interface AppContextInterface {
-    movies: [];
+    movies: MovieInterface[] | [];
     favorites: [];
     selectedMovie: any;
     searchQuery: string;
+    selectedMovieCast: [];
 }
 
 export interface AppActionInterface {
@@ -16,6 +18,7 @@ const initialState: AppContextInterface = {
     movies: [],
     favorites: [],
     selectedMovie: {},
+    selectedMovieCast: [],
     searchQuery: ""
 }
 
@@ -34,6 +37,8 @@ export const reducer = (state: AppContextInterface, action: AppActionInterface):
             return { ...state, selectedMovie: action.payload }
         case "SET_SEARCH_QUERY":
             return { ...state, searchQuery: action.payload }
+        case "SET_SELECTED_MOVIE_CAST":
+            return { ...state, selectedMovieCast: action.payload }
         default:
             return state;
     }

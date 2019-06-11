@@ -1,6 +1,5 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-import axios from "axios";
 import styles from "./App.module.scss";
 import SearchShow from "./components/SearchShow";
 import Home from "./components/Home";
@@ -9,11 +8,13 @@ import MovieDetail from "./components/MovieDetail";
 import Navbar from "./components/Navbar";
 import { AppContextProvider, AppContextInterface, reducer } from "./Store";
 import "font-awesome/css/font-awesome.css";
+import Actor from "./components/Actor";
 
 const initialState: AppContextInterface = {
   movies: [],
   favorites: [],
   selectedMovie: {},
+  selectedMovieCast: [],
   searchQuery: ""
 };
 
@@ -30,6 +31,7 @@ function App(): JSX.Element {
         <main>
           <Switch>
             <Route path="/favorites" component={Favorites} />
+            <Route path="/actor/:index" component={Actor} />
             <Route path="/search/:query" component={SearchShow} />
             <Route path="/movies/:id" component={MovieDetail} />
             <Route exact path="/" component={Home} />
