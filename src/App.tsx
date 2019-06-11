@@ -9,6 +9,7 @@ import MovieDetail from "./components/MovieDetail";
 import Navbar from "./components/Navbar";
 import { AppContextProvider, AppContextInterface, reducer } from "./Store";
 import "font-awesome/css/font-awesome.css";
+import Actor from "./components/Actor";
 
 const initialState: AppContextInterface = {
   movies: [],
@@ -21,7 +22,7 @@ function App(): JSX.Element {
   const [state, dispatch] = React.useReducer(reducer, initialState);
   console.log("state ", state);
 
-  return (
+  return ( 
     <AppContextProvider value={{ state, dispatch }}>
       <div className={styles["App"]}>
         <header>
@@ -30,6 +31,7 @@ function App(): JSX.Element {
         <main>
           <Switch>
             <Route path="/favorites" component={Favorites} />
+            <Route path="/actor" component={Actor} />
             <Route path="/search/:query" component={SearchShow} />
             <Route path="/movies/:id" component={MovieDetail} />
             <Route exact path="/" component={Home} />

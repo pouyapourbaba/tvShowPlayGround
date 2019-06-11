@@ -1,32 +1,36 @@
 import React from "react";
 import _ from "lodash";
-import axios from "axios";
-import ReactHtmlParser from "react-html-parser";
-import { RouteComponentProps } from "react-router-dom";
+import { RouteComponentProps, Link } from "react-router-dom";
 import { Context } from "./../Store";
 import styles from "../styles/MovieDetail.module.css";
+import { MovieDetailInterface } from "./../types/interfaces";
 
 type TParams = { id: any };
 
 const MovieDetail = (props: RouteComponentProps<TParams>) => {
-  const { state } = React.useContext(Context);
-  const movie = state.selectedMovie;
+  const { state, dispatch } = React.useContext(Context);
 
-  const getMovieDetailByImdbId = async (id: string) => {
-    const url = `http://api.tvmaze.com/lookup/shows?imdb=${id}`;
-    const response = await axios.get(url);
-    const results = response.data;
-  };
+  const movie: MovieDetailInterface = state.selectedMovie;
+  const cast = movie.Actors;
+  let castArray: string[] = [];
+  if (cast !== undefined) {
+    castArray = cast.split(", ");
+    castArray = castArray.map(cast => cast.replace(" ", "-"))
+  }
+  
 
-  getMovieDetailByImdbId(props.match.params.id)
-
+  // http://www.tvmaze.com/people/24483/jennifer-aniston
   return (
     <div className={styles["content"]}>
-      <h1>{movie.name}</h1>
-      <img src={movie.image.original} alt="" />
+      <h1>{movie.Title}</h1>
+      <img src={movie.Poster} alt="" />
       <div className={styles["summary"]}>
         <h3>Summary:</h3>
-        {ReactHtmlParser(movie.summary)}
+        <p>{movie.Plot}</p>
+        <h3>Cast:</h3>
+        {castArray.map((cast, index) => <Link key={index} to={`http://www.tvmaze.com/people/24483/${cast}`}>{cast}</Link>)}
+        <h3>IMDb rating:</h3>
+        <p>{movie.imdbRating}</p>
       </div>
     </div>
   );

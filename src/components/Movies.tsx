@@ -1,9 +1,9 @@
 import React from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import { MovieInterface } from "../types/interfaces";
 import styles from "../styles/Movies.module.scss";
 import { Context } from "../Store";
-import FavoritesSidebar from "./Favorites";
 
 export interface MovieCardProps {
   searchResult: MovieInterface[];
@@ -17,30 +17,42 @@ const MovieCard: React.SFC<MovieCardProps> = ({
   toggleFavorite
 }): JSX.Element => {
   const { state, dispatch } = React.useContext(Context);
-  const setSelectedMovie = (movie: MovieInterface) => {
+  
+  const getMovieDetailByImdbId = async (id: string) => {
+    let config = {
+      headers: {
+        "X-RapidAPI-Host": "movie-database-imdb-alternative.p.rapidapi.com",
+        "X-RapidAPI-Key": `${process.env.REACT_APP_X_RAPIDAPI_KEY}`
+      }
+    };
+
+    const url = `https://movie-database-imdb-alternative.p.rapidapi.com/?i=${id}&r=json`;
+    const response = await axios.get(url, config);
+    const movie = await response.data;
+
     dispatch({
       type: "SET_SELECTED_MOVIE",
       payload: movie
     });
   };
-
+  
   return (
     <React.Fragment>
       <p className={styles["search-result-number"]}>{state.movies.length} results found for "{state.searchQuery}": </p>
       <div className={styles["movies"]}>
         {searchResult.map((movie: MovieInterface) => (
-          <div key={movie.id} className={styles["movie"]}>
-            {movie.image && (
+          <div key={movie.imdbID} className={styles["movie"]}>
+            {movie.Poster && (
               <div className={styles["image"]}>
                 <Link
-                  to={`/movies/${movie.externals.imdb}`}
-                  onClick={() => setSelectedMovie(movie)}
+                  to={`/movies/${movie.imdbID}`}
+                  onClick={() => getMovieDetailByImdbId(movie.imdbID)}
                 >
-                  <img src={movie.image.medium} alt="" />
+                  <img src={movie.Poster} alt="" />
                 </Link>
                 <div className={styles["info"]}>
-                  <p>{movie.name}</p>
-                  <p>Status: {movie.status}</p>
+                  <p>{movie.Title}</p>
+                  <p>Type: {movie.Type}</p>
                 </div>
                 <button
                   type="button"

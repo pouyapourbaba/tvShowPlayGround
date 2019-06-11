@@ -118,7 +118,7 @@ nav li {
 
   nav ul {
     display: flex;
-    flex-direction: row; 
+    flex-direction: row;
     justify-content: flex-end;
     align-items: center;
   }
@@ -135,5 +135,14 @@ nav li {
   .nav-item {
     opacity: 1;
     margin-left: 0.5em;
+  }
+}
+
+.image-header {
+  height: calc(100vh - 85px);
+  width: 100vw;
+  img {
+    height: 100%;
+    width: 100%;
   }
 }

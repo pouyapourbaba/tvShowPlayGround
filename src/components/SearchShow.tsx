@@ -12,7 +12,7 @@ const SearchShow = (): JSX.Element => {
     if (state.favorites.includes(show)) {
       return dispatch({
         type: "TOGGLE_FAVORITE",
-        payload: state.favorites.filter((s: MovieInterface) => s.id !== show.id)
+        payload: state.favorites.filter((s: MovieInterface) => s.imdbID !== show.imdbID)
       });
     } else {
       return dispatch({
