@@ -26,7 +26,7 @@ const MovieCard: React.SFC<MovieCardProps> = ({
 
   return (
     <React.Fragment>
-      <p>{state.movies.length} results found for "{state.searchQuery}"</p>
+      <p className={styles["search-result-number"]}>{state.movies.length} results found for "{state.searchQuery}": </p>
       <div className={styles["movies"]}>
         {searchResult.map((movie: MovieInterface) => (
           <div key={movie.id} className={styles["movie"]}>

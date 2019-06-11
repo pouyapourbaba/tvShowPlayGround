@@ -1,10 +1,10 @@
 import React from "react";
-import { RouteComponentProps } from "react-router-dom";
 import axios from "axios";
 import _ from "lodash";
 import styles from "../styles/SearchForm.module.scss";
 import { Context, AppActionInterface } from "./../Store";
 import { MovieInterface, ResponseInterface } from "../types/interfaces";
+import { __RouterContext } from 'react-router';
 
 export interface SearchFormProps {
   className: string;
@@ -16,23 +16,13 @@ type ChangeEvent = React.ChangeEvent<HTMLInputElement>;
 const SearchForm: React.SFC<SearchFormProps> = props => {
   const [searchInput, setSearchInput] = React.useState<string>("");
   const { state, dispatch } = React.useContext(Context);
+  
+  // hook to the router context
+  // gives us access to the history, location, and match objects
+  const routerContext = React.useContext(__RouterContext);
 
   const handleChange = (e: ChangeEvent): void => {
     setSearchInput(e.target.value);
-  };
-
-  const toggleFavorite = (show: MovieInterface): AppActionInterface => {
-    if (state.favorites.includes(show)) {
-      return dispatch({
-        type: "TOGGLE_FAVORITE",
-        payload: state.favorites.filter((s: MovieInterface) => s.id !== show.id)
-      });
-    } else {
-      return dispatch({
-        type: "TOGGLE_FAVORITE",
-        payload: [...state.favorites, show]
-      });
-    }
   };
 
   const handleSearchMovies = async (e: FormElem) => {
@@ -63,8 +53,8 @@ const SearchForm: React.SFC<SearchFormProps> = props => {
       payload: searchInput
     });
 
-    // window.location.href = "/searched";
-    // props.history.push("")
+    // redirect to the 
+    routerContext.history.push(`/search/${searchInput}`)
   };
 
   return (
