@@ -4,6 +4,7 @@ import _ from "lodash";
 import styles from "../styles/SearchForm.module.scss";
 import { Context, AppActionInterface } from "./../Store";
 import { MovieInterface, ResponseInterface } from "../types/interfaces";
+import { __RouterContext } from 'react-router';
 
 export interface SearchFormProps {
   className: string;
@@ -12,26 +13,16 @@ export interface SearchFormProps {
 type FormElem = React.FormEvent<HTMLFormElement>;
 type ChangeEvent = React.ChangeEvent<HTMLInputElement>;
 
-const SearchForm: React.SFC<SearchFormProps> = () => {
+const SearchForm: React.SFC<SearchFormProps> = props => {
   const [searchInput, setSearchInput] = React.useState<string>("");
   const { state, dispatch } = React.useContext(Context);
+  
+  // hook to the router context
+  // gives us access to the history, location, and match objects
+  const routerContext = React.useContext(__RouterContext);
 
   const handleChange = (e: ChangeEvent): void => {
     setSearchInput(e.target.value);
-  };
-
-  const toggleFavorite = (show: MovieInterface): AppActionInterface => {
-    if (state.favorites.includes(show)) {
-      return dispatch({
-        type: "TOGGLE_FAVORITE",
-        payload: state.favorites.filter((s: MovieInterface) => s.id !== show.id)
-      });
-    } else {
-      return dispatch({
-        type: "TOGGLE_FAVORITE",
-        payload: [...state.favorites, show]
-      });
-    }
   };
 
   const handleSearchMovies = async (e: FormElem) => {
@@ -41,16 +32,29 @@ const SearchForm: React.SFC<SearchFormProps> = () => {
     const response = await axios.get(url);
     const results = response.data;
     const movies = results.map((result: ResponseInterface) => result.show);
-    setSearchInput("");
+    // setSearchInput("");
 
     if (_.isEmpty(movies)) {
       console.log("<h3>No Movies Found...</h3>");
     }
 
-    return dispatch({
+    // filter the movies without images
+    const filteredMovies = movies.filter(
+      (movie: MovieInterface) => movie.image !== null
+    );
+
+    dispatch({
       type: "SEARCH_MOVIE",
-      payload: movies
+      payload: filteredMovies
     });
+
+    dispatch({
+      type: "SET_SEARCH_QUERY",
+      payload: searchInput
+    });
+
+    // redirect to the 
+    routerContext.history.push(`/search/${searchInput}`)
   };
 
   return (
