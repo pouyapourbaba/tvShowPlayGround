@@ -24,6 +24,8 @@ const MovieCard: React.SFC<MovieCardProps> = ({
       payload: movie
     });
 
+    localStorage.setItem("selectedMovie", JSON.stringify(movie))
+
     const url = `http://api.tvmaze.com/shows/${movie.id}/cast`;
     const response = await axios.get(url);
     const results = response.data;
@@ -33,6 +35,8 @@ const MovieCard: React.SFC<MovieCardProps> = ({
       type: "SET_SELECTED_MOVIE_CAST",
       payload: results
     });
+    localStorage.setItem("selectedMovieCast", JSON.stringify(results))
+
   };
 
   return (
