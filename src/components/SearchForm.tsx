@@ -42,7 +42,8 @@ const SearchForm: React.SFC<SearchFormProps> = props => {
     const filteredMovies = movies.filter(
       (movie: MovieInterface) => movie.image !== null
     );
-    localStorage.setItem("movies", JSON.stringify(filteredMovies))
+    // local storage
+    // localStorage.setItem("movies", JSON.stringify(filteredMovies))
 
     dispatch({
       type: "SEARCH_MOVIE",

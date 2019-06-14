@@ -18,13 +18,14 @@ const MovieCard: React.SFC<MovieCardProps> = ({
   toggleFavorite
 }): JSX.Element => {
   const { state, dispatch } = React.useContext(Context);
+  
   const setSelectedMovie = async (movie: MovieInterface) => {
     dispatch({
       type: "SET_SELECTED_MOVIE",
       payload: movie
     });
 
-    localStorage.setItem("selectedMovie", JSON.stringify(movie))
+    // localStorage.setItem("selectedMovie", JSON.stringify(movie))
 
     const url = `http://api.tvmaze.com/shows/${movie.id}/cast`;
     const response = await axios.get(url);
@@ -35,7 +36,7 @@ const MovieCard: React.SFC<MovieCardProps> = ({
       type: "SET_SELECTED_MOVIE_CAST",
       payload: results
     });
-    localStorage.setItem("selectedMovieCast", JSON.stringify(results))
+    // localStorage.setItem("selectedMovieCast", JSON.stringify(results))
 
   };
 
@@ -50,7 +51,7 @@ const MovieCard: React.SFC<MovieCardProps> = ({
             {movie.image && (
               <div className={styles["image"]}>
                 <Link
-                  to={`/movies/${movie.externals.imdb}`}
+                  to={`/movies`} ///${movie.externals.imdb}
                   onClick={() => setSelectedMovie(movie)}
                 >
                   <img src={movie.image.original} alt="" />
