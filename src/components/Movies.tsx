@@ -27,7 +27,7 @@ const MovieCard: React.SFC<MovieCardProps> = ({
 
     // localStorage.setItem("selectedMovie", JSON.stringify(movie))
 
-    const url = `http://api.tvmaze.com/shows/${movie.id}/cast`;
+    const url = `https://api.tvmaze.com/shows/${movie.id}/cast`;
     const response = await axios.get(url);
     const results = response.data;
     console.log("results ", results);

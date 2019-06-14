@@ -28,7 +28,7 @@ const SearchForm: React.SFC<SearchFormProps> = props => {
   const handleSearchMovies = async (e: FormElem) => {
     e.preventDefault();
     
-    const url = `http://api.tvmaze.com/search/shows?q=${searchInput}`;
+    const url = `https://api.tvmaze.com/search/shows?q=${searchInput}`;
     const response = await axios.get(url);
     const results = response.data;
     const movies = results.map((result: ResponseInterface) => result.show);
