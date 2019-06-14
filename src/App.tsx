@@ -9,6 +9,7 @@ import Navbar from "./components/Navbar";
 import { AppContextProvider, AppContextInterface, reducer } from "./Store";
 import "font-awesome/css/font-awesome.css";
 import Actor from "./components/Actor";
+import axios from "axios";
 
 const initialState: AppContextInterface = {
   movies: [],
@@ -33,7 +34,7 @@ function App(): JSX.Element {
             <Route path="/favorites" component={Favorites} />
             <Route path="/actor/:index" component={Actor} />
             <Route path="/search/:query" component={SearchShow} />
-            <Route path="/movies/:id" component={MovieDetail} />
+            <Route path="/movies" component={MovieDetail} />
             <Route exact path="/" component={Home} />
             <Redirect to="/not-found" />
           </Switch>

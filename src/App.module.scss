@@ -4,8 +4,18 @@
 // import scss variables
 @import "styles/variables";
 
+* {
+	-webkit-box-sizing: border-box; 
+	-moz-box-sizing: border-box; 
+	box-sizing: border-box;
+}
+
+html {
+  font-size: 14px;
+}
+
 body {
-  background-color: $backgroundGrey;
+  background-color: white;
   margin: 0;
   padding: 0;
   font-family: "Montserrat", sans-serif;
@@ -28,8 +38,8 @@ header {
 
 main {
   grid-column: 2 / 12;
-  background-color: $backgroundLightYello;
-  border: 1px solid rgb(212, 212, 212);
+  // background-color: $backgroundLightGrey;
+  // border: 1px solid rgb(212, 212, 212);
   margin-top: 100px;
   margin-bottom: 20px;
   min-height: calc(100vh - 192px);
