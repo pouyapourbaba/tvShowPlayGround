@@ -6,6 +6,16 @@ import SearchForm from "./SearchForm";
 export interface NavbarProps {}
 
 const Navbar: React.SFC<NavbarProps> = (): JSX.Element => {
+  // const toggleRef = React.useRef<T>(initialValue: T): MutableRefObject<T>;
+  // const toggleRef = React.useRef<HTMLInputElement>(null);
+  const toggleRef: React.RefObject<HTMLInputElement> = React.createRef();
+
+  const toggleNavbar = () => {
+    if (toggleRef.current) {
+      toggleRef.current.checked = false;
+    }
+  };
+
   return (
     <div className={styles["nav-container"]}>
       <h1>
@@ -13,13 +23,18 @@ const Navbar: React.SFC<NavbarProps> = (): JSX.Element => {
           MoviEnd
         </Link>
       </h1>
-      <input type="checkbox" id="nav-toggle" className={styles["nav-toggle"]} />
+      <input
+        ref={toggleRef}
+        type="checkbox"
+        id="nav-toggle"
+        className={styles["nav-toggle"]}
+      />
       <nav>
         <ul>
           <li>
             <SearchForm className={styles["search"]} />
           </li>
-          <li>
+          <li onClick={toggleNavbar}>
             <NavLink
               className={styles["nav-item"]}
               activeClassName="active"
@@ -28,7 +43,7 @@ const Navbar: React.SFC<NavbarProps> = (): JSX.Element => {
               Home
             </NavLink>
           </li>
-          <li>
+          <li onClick={toggleNavbar}>
             <NavLink
               className={styles["nav-item"]}
               activeClassName="active"
