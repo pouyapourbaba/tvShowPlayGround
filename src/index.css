@@ -9,3 +9,6 @@ body {
   -webkit-appearance: none;
 }
 
+a {
+  text-decoration: none;
+}

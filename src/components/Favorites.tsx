@@ -1,5 +1,4 @@
 import React from "react";
-import ReactHtmlParser from "react-html-parser";
 import { Context } from "../Store";
 import { MovieInterface } from "../types/interfaces";
 import styles from "../styles/Favorites.module.scss";

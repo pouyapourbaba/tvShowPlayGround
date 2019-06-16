@@ -94,7 +94,7 @@ nav li {
 }
 
 .nav-item:focus {
-  color: rgb(156, 56, 56);
+  color: $backgroundYellow;
 }
 
 @media screen and (min-width: 768px) {

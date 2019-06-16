@@ -9,19 +9,19 @@ import Navbar from "./components/Navbar";
 import { AppContextProvider, AppContextInterface, reducer } from "./Store";
 import "font-awesome/css/font-awesome.css";
 import Actor from "./components/Actor";
-import axios from "axios";
 
 const initialState: AppContextInterface = {
   movies: [],
   favorites: [],
   selectedMovie: {},
   selectedMovieCast: [],
-  searchQuery: ""
+  searchQuery: "",
+  schedule: []
 };
 
 function App(): JSX.Element {
   const [state, dispatch] = React.useReducer(reducer, initialState);
-  console.log("state ", state);
+  console.log("state from App.tsx ", state);
 
   return (
     <AppContextProvider value={{ state, dispatch }}>
@@ -41,6 +41,10 @@ function App(): JSX.Element {
         </main>
         <footer>
           <p>&copy; Pouya Pourbaba</p>
+          <p>
+            This website is powered by data from{" "}
+            <a href="https://www.tvmaze.com/api">TVmaze API</a>.
+          </p>
         </footer>
       </div>
     </AppContextProvider>

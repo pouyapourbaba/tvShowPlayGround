@@ -1,8 +1,7 @@
 import React from "react";
 import axios from "axios";
-import _ from "lodash";
 import styles from "../styles/SearchForm.module.scss";
-import { Context, AppActionInterface } from "./../Store";
+import { Context } from "./../Store";
 import { MovieInterface, ResponseInterface } from "../types/interfaces";
 import { __RouterContext } from 'react-router';
 
@@ -15,7 +14,7 @@ type ChangeEvent = React.ChangeEvent<HTMLInputElement>;
 
 const SearchForm: React.SFC<SearchFormProps> = props => {
   const [searchInput, setSearchInput] = React.useState<string>("");
-  const { state, dispatch } = React.useContext(Context);
+  const { dispatch } = React.useContext(Context);
   
   // hook to the router context
   // gives us access to the history, location, and match objects
