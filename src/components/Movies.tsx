@@ -29,7 +29,7 @@ const MovieCard: React.SFC<MovieCardProps> = ({
     const url = `https://api.tvmaze.com/shows/${movie.id}/cast`;
     const response = await axios.get(url);
     const results = response.data;
-    console.log("results ", results);
+    // console.log("results ", results);
 
     dispatch({
       type: "SET_SELECTED_MOVIE_CAST",
