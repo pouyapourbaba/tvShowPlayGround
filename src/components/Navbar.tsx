@@ -6,8 +6,6 @@ import SearchForm from "./SearchForm";
 export interface NavbarProps {}
 
 const Navbar: React.SFC<NavbarProps> = (): JSX.Element => {
-  // const toggleRef = React.useRef<T>(initialValue: T): MutableRefObject<T>;
-  // const toggleRef = React.useRef<HTMLInputElement>(null);
   const toggleRef: React.RefObject<HTMLInputElement> = React.createRef();
 
   const toggleNavbar = () => {

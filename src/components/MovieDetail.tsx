@@ -5,7 +5,6 @@ import { Context } from "./../Store";
 import styles from "../styles/MovieDetail.module.scss";
 import { CastInterface, MovieInterface } from "./../types/interfaces";
 import axios from "axios";
-import Actor from "./Actor";
 
 type TParams = { id: any };
 

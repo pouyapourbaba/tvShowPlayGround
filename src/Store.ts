@@ -1,5 +1,5 @@
 import React from "react";
-import { MovieInterface } from "./types/interfaces";
+import { MovieInterface, ScheduleInterface } from "./types/interfaces";
 
 export interface AppContextInterface {
     movies: MovieInterface[] | [];
@@ -7,6 +7,7 @@ export interface AppContextInterface {
     selectedMovie: any;
     searchQuery: string;
     selectedMovieCast: [];
+    schedule: ScheduleInterface[] | [];
 }
 
 export interface AppActionInterface {
@@ -19,7 +20,8 @@ const initialState: AppContextInterface = {
     favorites: [],
     selectedMovie: {},
     selectedMovieCast: [],
-    searchQuery: ""
+    searchQuery: "",
+    schedule: []
 }
 
 export const Context = React.createContext<AppContextInterface | any>(initialState);
@@ -31,6 +33,8 @@ export const reducer = (state: AppContextInterface, action: AppActionInterface):
     switch (action.type) {
         case "SEARCH_MOVIE":
             return { ...state, movies: action.payload }
+        case "FETCH_SCHEDULE":
+            return { ...state, schedule: action.payload }
         case "TOGGLE_FAVORITE":
             return { ...state, favorites: action.payload }
         case "SET_SELECTED_MOVIE":

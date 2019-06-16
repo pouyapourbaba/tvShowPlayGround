@@ -1,7 +1,6 @@
 import React from "react";
-import _ from "lodash";
-import { MovieInterface, ResponseInterface } from "../types/interfaces";
 import Movies from "./Movies";
+import { MovieInterface } from "../types/interfaces";
 import { Context, AppActionInterface } from "./../Store";
 
 

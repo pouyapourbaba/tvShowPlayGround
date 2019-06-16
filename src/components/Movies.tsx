@@ -4,12 +4,11 @@ import { Link } from "react-router-dom";
 import { MovieInterface } from "../types/interfaces";
 import styles from "../styles/Movies.module.scss";
 import { Context } from "../Store";
-import FavoritesSidebar from "./Favorites";
 
 export interface MovieCardProps {
   searchResult: MovieInterface[];
   favorites: MovieInterface[];
-  toggleFavorite: any;
+  toggleFavorite?: any;
 }
 
 const MovieCard: React.SFC<MovieCardProps> = ({
