@@ -3,6 +3,61 @@
 // import scss variables
 @import "./variables";
 
+.navContainer {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: minmax(50px, auto) minmax(90px, auto);
+  font-family: "Montserrat", sans-serif;
+  color: $colorfontGrey;
+
+  .navUp {
+    grid-column: 1 / -1;
+    border-bottom: 1px solid #444;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    align-items: center;
+    .navUpBrand {
+      grid-column: 2/3;
+      font-weight: 600;
+      font-size: 1.2rem;
+      justify-self: start;
+      .link {
+        text-decoration: none;
+        color: $backgroundYellow;
+      }
+    }
+    .navUpSocialMediaIcons {
+      grid-column: 10/12;
+      justify-self: end;
+      * {
+        color: $navbarFontColor;
+        margin-left: 10px;
+      }
+    }
+  }
+
+  .navBelow {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    padding: 0;
+    margin: 0;
+    align-items: center;
+    font-size: 1.3rem;
+    .navBelowSearch {
+      grid-column: 2/7;
+      justify-self: start;
+      border: 1px $navbarFontColor solid;
+      height: 50px;
+    }
+    .navBelowLinks {
+      grid-column: 7/12;
+      justify-self: end;
+      margin: 0;
+    }
+  }
+}
+
 .nav-toggle {
   display: none;
 }
@@ -118,7 +173,7 @@ nav li {
 
   nav ul {
     display: flex;
-    flex-direction: row; 
+    flex-direction: row;
     justify-content: flex-end;
     align-items: center;
   }

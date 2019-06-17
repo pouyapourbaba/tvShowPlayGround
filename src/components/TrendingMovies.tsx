@@ -6,6 +6,17 @@ import moment from "moment";
 import ReactHtmlParser from "react-html-parser";
 import { Context } from "./../Store";
 import { ScheduleInterface } from "../types/interfaces";
+import {
+  CarouselProvider,
+  Slider,
+  Slide,
+  ButtonBack,
+  ButtonNext,
+  Image
+} from "pure-react-carousel";
+import PerfectScrollbar from "react-perfect-scrollbar";
+import "pure-react-carousel/dist/react-carousel.es.css";
+import "react-perfect-scrollbar/dist/css/styles.css";
 
 export interface TrendingMoviesProps {}
 type FormElem = React.FormEvent<HTMLFormElement>;
@@ -55,64 +66,116 @@ const TrendingMovies: React.SFC<TrendingMoviesProps> = () => {
   }
   const uniqueShcedules = removeDuplicated(schedule);
 
-  const sixUniqueSchedules = uniqueShcedules.slice(0, 6);
+  const sixUniqueSchedules = uniqueShcedules.slice(0, 8);
+  console.log("sixUniqueSchedules ", sixUniqueSchedules);
+
+  const totalSlides = uniqueShcedules.length > 8 ? 8 : uniqueShcedules.length;
+  const visibleSlides = totalSlides > 4 ? 4 : totalSlides;
 
   if (_.isEmpty(schedule)) return <div />;
   return (
     <div className={styles["content"]}>
       <div className={styles["header"]}>
-        Today's shows in
-        <select ref={selectRef} onChange={handleSUbmit}>
+        <h2>Today's shows in</h2>
+        <select
+          className={styles.select}
+          ref={selectRef}
+          onChange={handleSUbmit}
+        >
           <option value="US">USA</option>
-          <option value="AU">Austrailia</option>
-          <option value="BE">Belgium</option>
-          <option value="BR">Brazil</option>
-          <option value="CA">Canada</option>
-          <option value="FR">France</option>
-          <option value="DE">Germany</option>
-          <option value="IN">India</option>
+          {/* <option value="AU">Austrailia</option> */}
           <option value="JP">Japan</option>
           <option value="KR">Korea, Republic of</option>
-          <option value="NL">Netherlands</option>
           <option value="RU">Russia</option>
           <option value="GB">UK</option>
-          <option value="UA">Ukraine</option>
         </select>
-        {/* <button onClick={handleSUbmit} type="button">
-          <i className="fa fa-search" />
-        </button> */}
       </div>
-      <div className={styles["main"]}>
-        {sixUniqueSchedules.map((movie: ScheduleInterface) => (
-          <div key={movie.show.id} className={styles["movie"]}>
-            <div
-              className={`${styles["movieImageContainer"]} ${
-                styles["img-hover-zoom--colorize"]
-              }`}
-            >
-              <span className={styles["movieImageFrame"]}>
-                {movie.show.image && (
-                  <img src={movie.show.image.original} alt={movie.show.name} />
-                )}
-              </span>
+
+      <div className={styles.carouselProvider}>
+        <CarouselProvider
+          naturalSlideWidth={75}
+          naturalSlideHeight={110}
+          totalSlides={totalSlides}
+          visibleSlides={visibleSlides}
+          className={styles.carouselProvider}
+        >
+          <div className={styles.sliderContainer}>
+            <Slider>
+              {sixUniqueSchedules.map(
+                (movie: ScheduleInterface, index: number) => (
+                  <Slide key={index} className={styles.slide} index={index}>
+                    <Image
+                      tag={"div"}
+                      className={styles.image}
+                      src={movie.show.image.original}
+                      hasMasterSpinner={true}
+                    />
+                  </Slide>
+                )
+              )}
+            </Slider>
+            <ButtonBack className={styles.buttonBack}>
+              <i className="fa fa-angle-left" />
+            </ButtonBack>
+            <ButtonNext className={styles.buttonNext}>
+              <i className="fa fa-angle-right" />
+            </ButtonNext>
+          </div>
+        </CarouselProvider>
+      </div>
+
+      <div className={styles.details}>
+        <div className={styles.detailsMovies}>
+          {sixUniqueSchedules.map(movie => (
+            <div key={movie.show.id} className={styles.movie}>
+              <div className={styles.detailsImage}>
+                <img src={movie.show.image.original} alt="" />
+              </div>
+              <div className={styles.movieMain}>
+                  <div className={styles.detailsUp}>
+                    <div className={styles.detailsInfo}>
+                      <div className={styles.titleAndStars}>
+                        <h2>{movie.show.name}</h2>
+                        <div className={styles.stars}>
+                          {movie.show.rating.average !== null && (
+                            <span
+                              style={{
+                                width: `${movie.show.rating.average * 10}%`
+                              }}
+                              className={styles["stars-rating"]}
+                            />
+                          )}
+                        </div>
+                      </div>
+                      <p>Episode: {movie.name}</p>
+                      {movie.summary && (
+                        <p>Summary: {ReactHtmlParser(movie.summary)}</p>
+                      )}
+                      <p>Date: {movie.airdate}</p>
+                      <p>
+                        Time: {movie.airtime} (
+                        {movie.show.network
+                          ? movie.show.network.country.timezone
+                          : "N/A"}{" "}
+                        Timezone)
+                      </p>
+                    </div>
+                  </div>
+                <div className={styles.detailsBelow}>
+                  <div>Premiered: {movie.show.premiered}</div>
+                  <div>
+                    {movie.show.genres.map((genre: any, index: number) => (
+                      <span key={index} className={styles.genres}>
+                        {genre}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className={styles["title"]}>{movie.show.name}</div>
-          </div>
-        ))}
-      </div>
-      <div className={styles["aside"]}>
-        {sixUniqueSchedules.map(movie => (
-          <div className={styles["episodeInfo"]}>
-            <p>{movie.show.name}</p>
-            <p>episode: {movie.name}</p>
-            <p>date: {movie.airdate}</p>
-            <p>
-              time: {movie.airtime} (
-              {movie.show.network ? movie.show.network.country.timezone : "N/A"}{" "}
-              timezone)
-            </p>
-          </div>
-        ))}
+          ))}
+        </div>
+        <div className={styles.sidebar}>I am sidebar</div>
       </div>
     </div>
   );

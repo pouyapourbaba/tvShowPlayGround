@@ -5,9 +5,9 @@
 @import "styles/variables";
 
 * {
-	-webkit-box-sizing: border-box; 
-	-moz-box-sizing: border-box; 
-	box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 html {
@@ -19,6 +19,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Montserrat", sans-serif;
+  background-color: $backgroundDarkGrey;
 }
 
 .App {
@@ -40,13 +41,13 @@ main {
   grid-column: 1 / 13;
   // background-color: $backgroundLightGrey;
   // border: 1px solid rgb(212, 212, 212);
-  margin-top: 100px;
+  margin-top: 170px;
   margin-bottom: 20px;
   min-height: calc(100vh - 192px);
 }
 
 footer {
-  background-color: $backgroundDarkGrey;
+  background-color: $backgroundNavbar;
   grid-column: 1 / -1;
   color: #fff;
   display: flex;
@@ -54,8 +55,7 @@ footer {
   align-items: center;
   font-weight: 400;
 }
- 
+
 footer a {
   color: $backgroundYellow;
 }
-
