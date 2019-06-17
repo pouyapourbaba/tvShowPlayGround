@@ -3,6 +3,7 @@ import styles from "../styles/Sidebar.module.scss";
 import { Context } from "./../Store";
 import { ScheduleInterface, MovieInterface } from "../types/interfaces";
 // import { __RouterContext } from "react-router";
+import ScrollArea from "react-scrollbar";
 
 export interface SidebarProps {}
 
@@ -87,22 +88,31 @@ const Sidebar: React.SFC<SidebarProps> = props => {
       </div>
 
       <section className={styles.scheduleBasedOnNetwork}>
-        <h2>Scheduled for today in {country}</h2>
-        {networkList.map(network => {
-          return (
-            <div className={styles.eachNetwork}>
-              <div className={styles.netowrkTitle}>
-                <p>{network}</p>
-              </div>
-              {scheduleBasedOnNetwork[network].map((movie: MovieInterface) => (
-                <div key={movie.id} className={styles.networkDetails}>
-                  <p className={styles.time}>{movie.schedule.time}</p>
-                  <p className={styles.name}>{movie.name}</p>
+          <h2>Scheduled for today in {country}</h2>
+        <ScrollArea
+          speed={0.3}
+          className="area"
+          contentClassName="content"
+          horizontal={false}
+        >
+          {networkList.map(network => {
+            return (
+              <div className={styles.eachNetwork}>
+                <div className={styles.netowrkTitle}>
+                  <span>{network}</span>
                 </div>
-              ))}
-            </div>
-          );
-        })}
+                {scheduleBasedOnNetwork[network].map(
+                  (movie: MovieInterface) => (
+                    <div key={movie.id} className={styles.networkDetails}>
+                      <span className={styles.time}>{movie.schedule.time}</span>
+                      <span className={styles.name}>{movie.name}</span>
+                    </div>
+                  )
+                )}
+              </div>
+            );
+          })}
+        </ScrollArea>
       </section>
     </div>
   );

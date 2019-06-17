@@ -6,6 +6,7 @@ import moment from "moment";
 import ReactHtmlParser from "react-html-parser";
 import { Context } from "./../Store";
 import { ScheduleInterface } from "../types/interfaces";
+import ScrollArea from "react-scrollbar";
 import {
   CarouselProvider,
   Slider,
@@ -146,33 +147,40 @@ const TrendingMovies: React.SFC<TrendingMoviesProps> = () => {
               </div>
               <div className={styles.movieMain}>
                 <div className={styles.detailsUp}>
-                  <div className={styles.detailsInfo}>
-                    <div className={styles.titleAndStars}>
-                      <h2>{movie.show.name}</h2>
-                      <div className={styles.stars}>
-                        {movie.show.rating.average !== null && (
-                          <span
-                            style={{
-                              width: `${movie.show.rating.average * 10}%`
-                            }}
-                            className={styles["stars-rating"]}
-                          />
-                        )}
+                  <ScrollArea
+                    speed={0.3}
+                    className="area"
+                    contentClassName="content"
+                    horizontal={false}
+                  >
+                    <div className={styles.detailsInfo}>
+                      <div className={styles.titleAndStars}>
+                        <h2>{movie.show.name}</h2>
+                        <div className={styles.stars}>
+                          {movie.show.rating.average !== null && (
+                            <span
+                              style={{
+                                width: `${movie.show.rating.average * 10}%`
+                              }}
+                              className={styles["stars-rating"]}
+                            />
+                          )}
+                        </div>
                       </div>
+                      <p>Episode: {movie.name}</p>
+                      {movie.summary && (
+                        <p>Summary: {ReactHtmlParser(movie.summary)}</p>
+                      )}
+                      <p>Date: {movie.airdate}</p>
+                      <p>
+                        Time: {movie.airtime} (
+                        {movie.show.network
+                          ? movie.show.network.country.timezone
+                          : "N/A"}{" "}
+                        Timezone)
+                      </p>
                     </div>
-                    <p>Episode: {movie.name}</p>
-                    {movie.summary && (
-                      <p>Summary: {ReactHtmlParser(movie.summary)}</p>
-                    )}
-                    <p>Date: {movie.airdate}</p>
-                    <p>
-                      Time: {movie.airtime} (
-                      {movie.show.network
-                        ? movie.show.network.country.timezone
-                        : "N/A"}{" "}
-                      Timezone)
-                    </p>
-                  </div>
+                  </ScrollArea>
                 </div>
                 <div className={styles.detailsBelow}>
                   <div>Premiered: {movie.show.premiered}</div>
