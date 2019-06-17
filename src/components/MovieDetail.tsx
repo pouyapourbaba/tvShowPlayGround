@@ -16,7 +16,7 @@ const MovieDetail = (props: RouteComponentProps<TParams>) => {
   const setSelectedMovie = async () => {
     const { id } = props.match.params;
     // fetch the movie
-    const urlMovie = `http://api.tvmaze.com/shows/${id}`;
+    const urlMovie = `https://api.tvmaze.com/shows/${id}`;
     const responseMovie = await axios.get(urlMovie);
     const resultsMovie = responseMovie.data;
     dispatch({
