@@ -16,12 +16,12 @@ const initialState: AppContextInterface = {
   selectedMovie: {},
   selectedMovieCast: [],
   searchQuery: "",
-  schedule: []
+  schedule: [],
+  country: ""
 };
 
 function App(): JSX.Element {
   const [state, dispatch] = React.useReducer(reducer, initialState);
-  // console.log("state ", state);
 
   return (
     <AppContextProvider value={{ state, dispatch }}>
@@ -34,7 +34,7 @@ function App(): JSX.Element {
             <Route path="/favorites" component={Favorites} />
             <Route path="/actor/:index" component={Actor} />
             <Route path="/search/:query" component={SearchShow} />
-            <Route path="/movies" component={MovieDetail} />
+            <Route path="/movie/:id" component={MovieDetail} />
             <Route exact path="/" component={Home} />
             <Redirect to="/not-found" />
           </Switch>

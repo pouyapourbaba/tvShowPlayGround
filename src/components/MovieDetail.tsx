@@ -1,156 +1,164 @@
 import React from "react";
+import _ from "lodash";
+import moment from "moment";
+import axios from "axios";
 import ReactHtmlParser from "react-html-parser";
 import { RouteComponentProps, Link } from "react-router-dom";
-import { Context } from "./../Store";
+import { Context, AppActionInterface } from "./../Store";
 import styles from "../styles/MovieDetail.module.scss";
 import { CastInterface, MovieInterface } from "./../types/interfaces";
-import axios from "axios";
+// import axios from "axios";
 
-type TParams = { id: any };
+type TParams = { id: string };
 
 const MovieDetail = (props: RouteComponentProps<TParams>) => {
   const { state, dispatch } = React.useContext(Context);
 
-  const movie = state.selectedMovie;
-  const cast = state.selectedMovieCast;
-  const relatedMovies = state.movies.filter((m: MovieInterface) => m !== movie)
-  const [currentSlide, setCurrentSlide] = React.useState({
-    movie: relatedMovies[0],
-    index: 0
-  });
-
-  // localstorage
-  // let movies: string | any = localStorage.getItem("movies");
-  // movies = JSON.parse(movies);
-  // let movie: string | any = localStorage.getItem("selectedMovie");
-  // movie = JSON.parse(movie);
-  // console.log("movie ", movie);
-  // let cast: string | any = localStorage.getItem("selectedMovieCast");
-  // cast = JSON.parse(cast);
-  // console.log("cast ", cast);
-  // let relatedMovies = movies.filter((m: MovieInterface) => m !== movie);
-  // relatedMovies = relatedMovies.slice(0, 3);
-  // console.log("relatedMovies ", relatedMovies);
-  // const [currentSlide, setCurrentSlide] = React.useState({
-  //   movie: relatedMovies[0],
-  //   index: 0
-  // });
-  // console.log("currentSlide ", currentSlide);
-
-  const handleNextSlide = () => {
-    if (currentSlide.index >= state.movies.length - 1) return null;
-    const nextIndex = currentSlide.index + 1;
-    const nextSlide = {
-      movie: state.movies[nextIndex],
-      index: nextIndex
-    };
-    setCurrentSlide(nextSlide);
+  const toggleFavorite = (movie: MovieInterface): AppActionInterface => {
+    console.log(movie);
+    if (state.favorites.includes(movie)) {
+      return dispatch({
+        type: "TOGGLE_FAVORITE",
+        payload: state.favorites.filter(
+          (s: MovieInterface) => s.id !== movie.id
+        )
+      });
+    } else {
+      return dispatch({
+        type: "TOGGLE_FAVORITE",
+        payload: [...state.favorites, movie]
+      });
+    }
   };
 
-  const handlePreviousSlide = () => {
-    if (currentSlide.index <= 0) return null;
-    const previousIndex = currentSlide.index - 1;
-    const previousSlide = {
-      movie: state.movies[previousIndex],
-      index: previousIndex
-    };
-    setCurrentSlide(previousSlide);
-  };
-
-  const setSelectedMovie = async (movie: MovieInterface) => {
+  const setSelectedMovie = async () => {
+    const { id } = props.match.params;
+    // fetch the movie
+    const urlMovie = `https://api.tvmaze.com/shows/${id}`;
+    const responseMovie = await axios.get(urlMovie);
+    const resultsMovie = responseMovie.data;
     dispatch({
       type: "SET_SELECTED_MOVIE",
-      payload: movie
+      payload: resultsMovie
     });
 
-    // localStorage.setItem("selectedMovie", JSON.stringify(movie))
-
-    const url = `https://api.tvmaze.com/shows/${movie.id}/cast`;
-    const response = await axios.get(url);
-    const results = response.data;
-    console.log("results ", results);
-
+    // fetch the cast
+    const urlCast = `https://api.tvmaze.com/shows/${resultsMovie.id}/cast`;
+    const responseCast = await axios.get(urlCast);
+    const resultsCast = responseCast.data;
     dispatch({
       type: "SET_SELECTED_MOVIE_CAST",
-      payload: results
+      payload: resultsCast
     });
-
-    // localStorage.setItem("selectedMovieCast", JSON.stringify(results))
-
   };
 
+  // fetch the movie and the cast when the page is reloaded
+  if (_.isEmpty(state.selectedMovie)) {
+    setSelectedMovie();
+    return <div />;
+  }
+
+  const { selectedMovie: movie, selectedMovieCast: cast, favorites } = state;
+  console.log("state ", state);
+
+  // parse the premier year of the movie
+  let year = moment(movie.premiered, "YYYY-MM-DD").year();
+
+  // const relatedMovies = state.movies.filter((m: MovieInterface) => m !== movie);
+
   return (
-    <div className={styles["content"]}>
-      <h1>{movie.name ? movie.name : "N/A"}</h1>
-      <div className={styles["image-container"]}>
+    <div className={styles.content}>
+      <div className={styles.movieImage}>
         <img src={movie.image.original} alt="" />
-        <div className={styles["image-network"]}>
-          {movie.network  && `${movie.network.name} - ${movie.network.country.name}`}
-          
-        </div>
       </div>
-      <div className={styles["summary"]}>{ReactHtmlParser(movie.summary)}</div>
-      <div>
-        <h1 className={styles["cast-heading"]}>Cast</h1>
-        {cast.map((cast: CastInterface, index: number) => (
-          <div key={cast.person.id} className={styles["casts"]}>
-            <div className={styles["cast-info-container"]}>
-              <Link
-                key={cast.person.id}
-                to={`/actor/${index}`}
-                className={styles["cast-info-title"]}
-              >
-                <p>{cast.person.name}</p>
-              </Link>
-              <div>
-                <p>
-                  Character:{" "}
-                  <span className={styles["cast-info-bullet"]}>
-                    {cast.character.name}
-                  </span>
-                </p>
-                <p>
-                  From:{" "}
-                  <span className={styles["cast-info-bullet"]}>
-                    {cast.person.country && cast.person.country.name}
-                  </span>
-                </p>
-              </div>
-            </div>
-            <div className={styles["cast-image-container"]}>
-            <Link
-                key={cast.person.id}
-                to={`/actor/${index}`}
-                className={styles["cast-info-title"]}
-              >
-              <img src={cast.person.image && cast.person.image.original} alt="" />
-            </Link>
-            </div>
-          </div>
-        ))}
-      {/* </div>
-        <h1>Realated movies</h1>
-      <div className={styles["related-movies"]}>
-        {relatedMovies.map((movie: MovieInterface) => {
-          return movie.image && (
-            <div className={styles["related-movie"]}>
-              <Link
-                to={`/movies/${movie.externals.imdb}`}
-                onClick={() => setSelectedMovie(movie)}
-              >
-                <img src={movie.image.original} alt="" />
-              </Link>
-              <div className={styles["info"]}>
-                <p>{movie.name}</p>
-              </div>
-            </div>
-          );
-        })} */}
-        {/* <img src={currentSlide.movie.image.medium} alt="" /> */}
-        {/* <button onClick={() => handlePreviousSlide()}>previos</button>
-        <button onClick={() => handleNextSlide()}>next</button> */}
+      <div className={styles.movieInfo}>
+        <div className={styles.movieTitle}>
+          <span className={styles.title}>{movie.name}</span>
+          <span className={styles.year}>{year}</span>
+        </div>
+        <div className={styles.favorite}>
+          <button
+            type="button"
+            title={
+              favorites.includes(movie)
+                ? "Remove from favories"
+                : "Add to favorites"
+            }
+            style={
+              favorites.includes(movie)
+                ? {
+                    color: "rgb(240, 188, 17)",
+                    borderColor: "rgb(240, 188, 17)"
+                  }
+                : { color: "#fff" }
+            }
+            onClick={() => toggleFavorite(movie)}
+          >
+            <i className="fa fa-heart" />
+          </button>
+          <span className={styles.favoriteButtonText}>
+            {favorites.includes(movie)
+              ? "Remove from the favorites"
+              : "Add to the favorites"}
+          </span>
+        </div>
+
+        <div className={styles.summary}>{ReactHtmlParser(movie.summary)}</div>
       </div>
     </div>
+    // <div className={styles["content"]}>
+    //   <h1>{movie.name ? movie.name : "N/A"}</h1>
+    //   <div className={styles["image-container"]}>
+    //     <img src={movie.image.original} alt="" />
+    //     <div className={styles["image-network"]}>
+    //       {movie.network &&
+    //         `${movie.network.name} - ${movie.network.country.name}`}
+    //     </div>
+    //   </div>
+    //   <div className={styles["summary"]}>{ReactHtmlParser(movie.summary)}</div>
+    //   <div>
+    //     <h1 className={styles["cast-heading"]}>Cast</h1>
+    //     {cast.map((cast: CastInterface, index: number) => (
+    //       <div key={cast.person.id} className={styles["casts"]}>
+    //         <div className={styles["cast-info-container"]}>
+    //           <Link
+    //             key={cast.person.id}
+    //             to={`/actor/${index}`}
+    //             className={styles["cast-info-title"]}
+    //           >
+    //             <p>{cast.person.name}</p>
+    //           </Link>
+    //           <div>
+    //             <p>
+    //               Character:{" "}
+    //               <span className={styles["cast-info-bullet"]}>
+    //                 {cast.character.name}
+    //               </span>
+    //             </p>
+    //             <p>
+    //               From:{" "}
+    //               <span className={styles["cast-info-bullet"]}>
+    //                 {cast.person.country && cast.person.country.name}
+    //               </span>
+    //             </p>
+    //           </div>
+    //         </div>
+    //         <div className={styles["cast-image-container"]}>
+    //           <Link
+    //             key={cast.person.id}
+    //             to={`/actor/${index}`}
+    //             className={styles["cast-info-title"]}
+    //           >
+    //             <img
+    //               src={cast.person.image && cast.person.image.original}
+    //               alt=""
+    //             />
+    //           </Link>
+    //         </div>
+    //       </div>
+    //     ))}
+    //   </div>
+    // </div>
   );
 };
 

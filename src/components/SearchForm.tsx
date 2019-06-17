@@ -29,22 +29,18 @@ const SearchForm: React.SFC<SearchFormProps> = props => {
   const handleSearchMovies = async (e: FormElem) => {
     e.preventDefault();
 
-    const url = `https://api.tvmaze.com/search/${props.searchFor}?q=${searchInput}`;
+    const url = `https://api.tvmaze.com/search/${
+      props.searchFor
+    }?q=${searchInput}`;
     const response = await axios.get(url);
     const results = response.data;
     const movies = results.map((result: ResponseInterface) => result.show);
     setSearchInput("");
 
-    // if (_.isEmpty(movies)) {
-    //   console.log("<h3>No Movies Found...</h3>");
-    // }
-
     // filter the movies without images
     const filteredMovies = movies.filter(
       (movie: MovieInterface) => movie.image !== null
     );
-    // local storage
-    // localStorage.setItem("movies", JSON.stringify(filteredMovies))
 
     dispatch({
       type: "SEARCH_MOVIE",
@@ -62,21 +58,17 @@ const SearchForm: React.SFC<SearchFormProps> = props => {
 
   return (
     <form onSubmit={handleSearchMovies} className={styles.form}>
-      {/* <select className={styles.select}>
-        <option value="shows">Movies</option>
-        <option value="people">People</option>
-      </select> */}
-        <input
-          className={styles.input}
-          type="text"
-          placeholder={props.valueText}
-          onChange={handleChange}
-          value={searchInput}
-          required
-        />
-        <button type="submit" className={styles.button}>
-          <i className="fa fa-search" />
-        </button>
+      <input
+        className={styles.input}
+        type="text"
+        placeholder={props.valueText}
+        onChange={handleChange}
+        value={searchInput}
+        required
+      />
+      <button type="submit" className={styles.button}>
+        <i className="fa fa-search" />
+      </button>
     </form>
   );
 };

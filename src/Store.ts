@@ -8,6 +8,7 @@ export interface AppContextInterface {
     searchQuery: string;
     selectedMovieCast: [];
     schedule: ScheduleInterface[] | [];
+    country: string;
 }
 
 export interface AppActionInterface {
@@ -21,7 +22,8 @@ const initialState: AppContextInterface = {
     selectedMovie: {},
     selectedMovieCast: [],
     searchQuery: "",
-    schedule: []
+    schedule: [],
+    country: ""
 }
 
 export const Context = React.createContext<AppContextInterface | any>(initialState);
@@ -43,6 +45,8 @@ export const reducer = (state: AppContextInterface, action: AppActionInterface):
             return { ...state, searchQuery: action.payload }
         case "SET_SELECTED_MOVIE_CAST":
             return { ...state, selectedMovieCast: action.payload }
+        case "SET_COUNTRY":
+            return { ...state, country: action.payload }
         default:
             return state;
     }
