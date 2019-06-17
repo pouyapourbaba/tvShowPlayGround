@@ -33,7 +33,7 @@ const TrendingMovies: React.SFC<TrendingMoviesProps> = () => {
   const handleFetchTrendingMovies = async (countryCode: string) => {
     const date = moment().format("YYYY-MM-DD");
     const response = await axios.get(
-      `http://api.tvmaze.com/schedule?country=${countryCode}&date=${date}`
+      `https://api.tvmaze.com/schedule?country=${countryCode}&date=${date}`
     );
     const schedule: ScheduleInterface[] = response.data;
     dispatch({
