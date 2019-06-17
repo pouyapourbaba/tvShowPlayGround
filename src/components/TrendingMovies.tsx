@@ -5,7 +5,7 @@ import axios from "axios";
 import moment from "moment";
 import ReactHtmlParser from "react-html-parser";
 import { Context } from "./../Store";
-import { ScheduleInterface } from "../types/interfaces";
+import { ScheduleInterface, MovieInterface } from "../types/interfaces";
 import {
   CarouselProvider,
   Slider,
@@ -14,15 +14,13 @@ import {
   ButtonNext,
   Image
 } from "pure-react-carousel";
-import PerfectScrollbar from "react-perfect-scrollbar";
 import "pure-react-carousel/dist/react-carousel.es.css";
-import "react-perfect-scrollbar/dist/css/styles.css";
 import Sidebar from "./Sidebar";
 
 export interface TrendingMoviesProps {}
-type FormElem = React.FormEvent<HTMLFormElement>;
+// type FormElem = React.FormEvent<HTMLFormElement>;
 // type ChangeEvent = React.ChangeEvent<HTMLInputElement>;
-type ButtonEvent = React.MouseEvent<HTMLButtonElement>;
+// type ButtonEvent = React.MouseEvent<HTMLButtonElement>;
 type ChangeEvent = React.ChangeEvent<HTMLSelectElement>;
 
 const TrendingMovies: React.SFC<TrendingMoviesProps> = () => {
@@ -36,14 +34,39 @@ const TrendingMovies: React.SFC<TrendingMoviesProps> = () => {
       `https://api.tvmaze.com/schedule?country=${countryCode}&date=${date}`
     );
     const schedule: ScheduleInterface[] = response.data;
+
+    // remove the duplicated movies
+    function removeDuplicated(arr: any, key = "id") {
+      const map = new Map();
+      arr.map((el: any) => {
+        if (!map.has(el.show[key])) {
+          map.set(el.show[key], el);
+        }
+      });
+      return Array.from(map.values());
+    }
+    const uniqueShcedules = removeDuplicated(schedule);
+
     dispatch({
       type: "FETCH_SCHEDULE",
-      payload: schedule
+      payload: uniqueShcedules
+    });
+
+    let country: string = "";
+    if (countryCode === "US") country = "USA";
+    if (countryCode === "GB") country = "United Kingdoms";
+    if (countryCode === "JP") country = "Japan";
+    if (countryCode === "RU") country = "Russia";
+    if (countryCode === "KR") country = "Korea";
+    dispatch({
+      type: "SET_COUNTRY",
+      payload: country
     });
   };
 
   const handleSUbmit = async (e: ChangeEvent) => {
     e.preventDefault();
+    console.log(e.currentTarget.dataset);
     if (selectRef.current) {
       handleFetchTrendingMovies(selectRef.current.value);
     }
@@ -54,23 +77,15 @@ const TrendingMovies: React.SFC<TrendingMoviesProps> = () => {
     handleFetchTrendingMovies("US");
   }, []);
 
-  const { trendingMovies, schedule } = state;
+  const { schedule } = state;
+  console.log("state ", state);
+  //  console.log("trendingMovies ", trendingMovies);
 
-  function removeDuplicated(arr: any, key = "id") {
-    const map = new Map();
-    arr.map((el: any) => {
-      if (!map.has(el.show[key])) {
-        map.set(el.show[key], el);
-      }
-    });
-    return Array.from(map.values());
-  }
-  const uniqueShcedules = removeDuplicated(schedule);
+  // if (!trendingMovies) return <div></div>
 
-  const sixUniqueSchedules = uniqueShcedules.slice(0, 8);
-  console.log("sixUniqueSchedules ", sixUniqueSchedules);
+  const sixUniqueSchedules = schedule.slice(0, 8);
 
-  const totalSlides = uniqueShcedules.length > 8 ? 8 : uniqueShcedules.length;
+  const totalSlides = schedule.length > 8 ? 8 : schedule.length;
   const visibleSlides = totalSlides > 4 ? 4 : totalSlides;
 
   if (_.isEmpty(schedule)) return <div />;
@@ -127,41 +142,41 @@ const TrendingMovies: React.SFC<TrendingMoviesProps> = () => {
 
       <div className={styles.details}>
         <div className={styles.detailsMovies}>
-          {sixUniqueSchedules.map(movie => (
+          {sixUniqueSchedules.map((movie: ScheduleInterface) => (
             <div key={movie.show.id} className={styles.movie}>
               <div className={styles.detailsImage}>
                 <img src={movie.show.image.original} alt="" />
               </div>
               <div className={styles.movieMain}>
-                  <div className={styles.detailsUp}>
-                    <div className={styles.detailsInfo}>
-                      <div className={styles.titleAndStars}>
-                        <h2>{movie.show.name}</h2>
-                        <div className={styles.stars}>
-                          {movie.show.rating.average !== null && (
-                            <span
-                              style={{
-                                width: `${movie.show.rating.average * 10}%`
-                              }}
-                              className={styles["stars-rating"]}
-                            />
-                          )}
-                        </div>
+                <div className={styles.detailsUp}>
+                  <div className={styles.detailsInfo}>
+                    <div className={styles.titleAndStars}>
+                      <h2>{movie.show.name}</h2>
+                      <div className={styles.stars}>
+                        {movie.show.rating.average !== null && (
+                          <span
+                            style={{
+                              width: `${movie.show.rating.average * 10}%`
+                            }}
+                            className={styles["stars-rating"]}
+                          />
+                        )}
                       </div>
-                      <p>Episode: {movie.name}</p>
-                      {movie.summary && (
-                        <p>Summary: {ReactHtmlParser(movie.summary)}</p>
-                      )}
-                      <p>Date: {movie.airdate}</p>
-                      <p>
-                        Time: {movie.airtime} (
-                        {movie.show.network
-                          ? movie.show.network.country.timezone
-                          : "N/A"}{" "}
-                        Timezone)
-                      </p>
                     </div>
+                    <p>Episode: {movie.name}</p>
+                    {movie.summary && (
+                      <p>Summary: {ReactHtmlParser(movie.summary)}</p>
+                    )}
+                    <p>Date: {movie.airdate}</p>
+                    <p>
+                      Time: {movie.airtime} (
+                      {movie.show.network
+                        ? movie.show.network.country.timezone
+                        : "N/A"}{" "}
+                      Timezone)
+                    </p>
                   </div>
+                </div>
                 <div className={styles.detailsBelow}>
                   <div>Premiered: {movie.show.premiered}</div>
                   <div>
@@ -176,7 +191,9 @@ const TrendingMovies: React.SFC<TrendingMoviesProps> = () => {
             </div>
           ))}
         </div>
-        <div className={styles.sidebar}><Sidebar /></div>
+        <div className={styles.sidebar}>
+          <Sidebar />
+        </div>
       </div>
     </div>
   );

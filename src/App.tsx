@@ -16,7 +16,8 @@ const initialState: AppContextInterface = {
   selectedMovie: {},
   selectedMovieCast: [],
   searchQuery: "",
-  schedule: []
+  schedule: [],
+  country: ""
 };
 
 function App(): JSX.Element {
