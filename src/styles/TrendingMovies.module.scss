@@ -100,14 +100,14 @@
 }
 .details .detailsMovies .movie {
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
+  grid-template-columns: repeat(20, 1fr);
   background-color: #222;
   color: $colorfontGrey;
   margin-bottom: 40px;
 }
 
 .details .detailsMovies .movie .detailsImage {
-  grid-column: 1/4;
+  grid-column: 1/7;
   height: 100%;
 }
 .details .detailsMovies .movie .detailsImage img {
@@ -115,10 +115,10 @@
 }
 
 .details .detailsMovies .movie .movieMain {
-  grid-column: 4 / -1;
+  grid-column: 7 / -1;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: 300px 50px;
+  grid-template-rows: 350px 50px;
 }
 
 .details .detailsMovies .movie .movieMain .detailsUp {

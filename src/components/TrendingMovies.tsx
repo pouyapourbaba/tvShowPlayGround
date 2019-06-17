@@ -91,7 +91,8 @@ const TrendingMovies: React.SFC<TrendingMoviesProps> = () => {
 
   React.useEffect(() => {
     // Default page shows schedule for USA
-    handleFetchTrendingMovies("US");
+    const country = state.country ? state.country : "US";
+    handleFetchTrendingMovies(country);
   }, []);
 
   const { schedule } = state;
@@ -178,7 +179,7 @@ const TrendingMovies: React.SFC<TrendingMoviesProps> = () => {
                     <div className={styles.detailsInfo}>
                       <div className={styles.titleAndStars}>
                         <Link
-                        className={styles.title}
+                          className={styles.title}
                           onClick={() => setSelectedMovie(movie.show)}
                           to={`/movie/${String(movie.id)}`}
                         >
