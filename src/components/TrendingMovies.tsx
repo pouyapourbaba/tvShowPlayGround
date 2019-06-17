@@ -17,6 +17,7 @@ import {
 import PerfectScrollbar from "react-perfect-scrollbar";
 import "pure-react-carousel/dist/react-carousel.es.css";
 import "react-perfect-scrollbar/dist/css/styles.css";
+import Sidebar from "./Sidebar";
 
 export interface TrendingMoviesProps {}
 type FormElem = React.FormEvent<HTMLFormElement>;
@@ -175,7 +176,7 @@ const TrendingMovies: React.SFC<TrendingMoviesProps> = () => {
             </div>
           ))}
         </div>
-        <div className={styles.sidebar}>I am sidebar</div>
+        <div className={styles.sidebar}><Sidebar /></div>
       </div>
     </div>
   );

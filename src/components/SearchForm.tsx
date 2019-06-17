@@ -7,6 +7,8 @@ import { __RouterContext } from "react-router";
 
 export interface SearchFormProps {
   className: string;
+  searchFor: string;
+  valueText: string;
 }
 
 type FormElem = React.FormEvent<HTMLFormElement>;
@@ -27,7 +29,7 @@ const SearchForm: React.SFC<SearchFormProps> = props => {
   const handleSearchMovies = async (e: FormElem) => {
     e.preventDefault();
 
-    const url = `https://api.tvmaze.com/search/shows?q=${searchInput}`;
+    const url = `https://api.tvmaze.com/search/${props.searchFor}?q=${searchInput}`;
     const response = await axios.get(url);
     const results = response.data;
     const movies = results.map((result: ResponseInterface) => result.show);
@@ -67,7 +69,7 @@ const SearchForm: React.SFC<SearchFormProps> = props => {
         <input
           className={styles.input}
           type="text"
-          placeholder="Search for TV Shows or Movies..."
+          placeholder={props.valueText}
           onChange={handleChange}
           value={searchInput}
           required

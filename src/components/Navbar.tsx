@@ -32,7 +32,7 @@ const Navbar: React.SFC = (): JSX.Element => {
       </div>
       <div className={styles.navBelow}>
         <div className={styles.navBelowSearch}>
-          <SearchForm className={styles["search"]} />
+          <SearchForm className={styles["search"]} valueText={"Search for TV Shows and Movies.."} searchFor={"shows"}/>
         </div>
         <nav className={styles.navBelowLinks}>
           <ul>
