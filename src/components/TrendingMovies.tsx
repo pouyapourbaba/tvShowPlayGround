@@ -5,7 +5,7 @@ import axios from "axios";
 import moment from "moment";
 import ReactHtmlParser from "react-html-parser";
 import { Context } from "./../Store";
-import { ScheduleInterface, MovieInterface } from "../types/interfaces";
+import { ScheduleInterface } from "../types/interfaces";
 import {
   CarouselProvider,
   Slider,
@@ -79,7 +79,6 @@ const TrendingMovies: React.SFC<TrendingMoviesProps> = () => {
 
   const { schedule } = state;
   console.log("state ", state);
-  //  console.log("trendingMovies ", trendingMovies);
 
   // if (!trendingMovies) return <div></div>
 

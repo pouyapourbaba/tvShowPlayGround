@@ -19,13 +19,13 @@ const Navbar: React.SFC = (): JSX.Element => {
           <Link className={styles.link} to="/">MoviEnd</Link>
         </div>
         <div className={styles.navUpSocialMediaIcons}>
-          <a href="#">
+          <a href="/">
             <i className="fa fa-github" />
           </a>
-          <a href="#">
+          <a href="/">
             <i className="fa fa-twitter" />
           </a>
-          <a href="#">
+          <a href="/">
             <i className="fa fa-linkedin" />
           </a>
         </div>

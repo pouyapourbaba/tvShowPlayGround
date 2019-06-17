@@ -1,9 +1,8 @@
 import * as React from "react";
-import _ from "lodash";
 import styles from "../styles/Sidebar.module.scss";
 import { Context } from "./../Store";
 import { ScheduleInterface, MovieInterface } from "../types/interfaces";
-import { __RouterContext } from "react-router";
+// import { __RouterContext } from "react-router";
 
 export interface SidebarProps {}
 
