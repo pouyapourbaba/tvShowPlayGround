@@ -28,7 +28,6 @@ const MovieDetail = (props: RouteComponentProps<TParams>) => {
     const urlCast = `https://api.tvmaze.com/shows/${resultsMovie.id}/cast`;
     const responseCast = await axios.get(urlCast);
     const resultsCast = responseCast.data;
-    console.log("resultsCast ", resultsCast);
     dispatch({
       type: "SET_SELECTED_MOVIE_CAST",
       payload: resultsCast

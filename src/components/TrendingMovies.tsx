@@ -66,7 +66,6 @@ const TrendingMovies: React.SFC<TrendingMoviesProps> = () => {
 
   const handleSUbmit = async (e: ChangeEvent) => {
     e.preventDefault();
-    console.log(e.currentTarget.dataset);
     if (selectRef.current) {
       handleFetchTrendingMovies(selectRef.current.value);
     }
@@ -78,7 +77,6 @@ const TrendingMovies: React.SFC<TrendingMoviesProps> = () => {
   }, []);
 
   const { schedule } = state;
-  console.log("state ", state);
 
   // if (!trendingMovies) return <div></div>
 
