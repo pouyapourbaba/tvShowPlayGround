@@ -3,9 +3,10 @@ import styles from "../styles/TrendingMovies.module.scss";
 import _ from "lodash";
 import axios from "axios";
 import moment from "moment";
+import { Link } from "react-router-dom";
 import ReactHtmlParser from "react-html-parser";
 import { Context } from "./../Store";
-import { ScheduleInterface } from "../types/interfaces";
+import { ScheduleInterface, MovieInterface } from "../types/interfaces";
 import ScrollArea from "react-scrollbar";
 import {
   CarouselProvider,
@@ -28,6 +29,22 @@ const TrendingMovies: React.SFC<TrendingMoviesProps> = () => {
   const { state, dispatch } = React.useContext(Context);
 
   const selectRef: React.RefObject<HTMLSelectElement> = React.createRef();
+
+  const setSelectedMovie = async (movie: MovieInterface) => {
+    dispatch({
+      type: "SET_SELECTED_MOVIE",
+      payload: movie
+    });
+
+    const url = `https://api.tvmaze.com/shows/${movie.id}/cast`;
+    const response = await axios.get(url);
+    const results = response.data;
+
+    dispatch({
+      type: "SET_SELECTED_MOVIE_CAST",
+      payload: results
+    });
+  };
 
   const handleFetchTrendingMovies = async (countryCode: string) => {
     const date = moment().format("YYYY-MM-DD");
@@ -143,19 +160,30 @@ const TrendingMovies: React.SFC<TrendingMoviesProps> = () => {
           {sixUniqueSchedules.map((movie: ScheduleInterface) => (
             <div key={movie.show.id} className={styles.movie}>
               <div className={styles.detailsImage}>
-                <img src={movie.show.image.original} alt="" />
+                <Link
+                  onClick={() => setSelectedMovie(movie.show)}
+                  to={`/movie/${String(movie.id)}`}
+                >
+                  <img src={movie.show.image.original} alt="" />
+                </Link>
               </div>
               <div className={styles.movieMain}>
                 <div className={styles.detailsUp}>
                   <ScrollArea
                     speed={0.3}
-                    className="area"
+                    className={styles.scrollbar}
                     contentClassName="content"
                     horizontal={false}
                   >
                     <div className={styles.detailsInfo}>
                       <div className={styles.titleAndStars}>
-                        <h2>{movie.show.name}</h2>
+                        <Link
+                        className={styles.title}
+                          onClick={() => setSelectedMovie(movie.show)}
+                          to={`/movie/${String(movie.id)}`}
+                        >
+                          <h2>{movie.show.name}</h2>
+                        </Link>
                         <div className={styles.stars}>
                           {movie.show.rating.average !== null && (
                             <span

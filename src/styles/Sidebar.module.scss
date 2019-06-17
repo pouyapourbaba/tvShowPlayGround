@@ -73,5 +73,9 @@
   }
   .networkDetails .name {
     grid-column: 3/-1;
+    .link {
+      text-decoration: none;
+      color: #999;
+    }
   }
 }

@@ -15,11 +15,13 @@ const MovieDetail = (props: RouteComponentProps<TParams>) => {
   const { state, dispatch } = React.useContext(Context);
 
   const toggleFavorite = (movie: MovieInterface): AppActionInterface => {
-    console.log(movie)
+    console.log(movie);
     if (state.favorites.includes(movie)) {
       return dispatch({
         type: "TOGGLE_FAVORITE",
-        payload: state.favorites.filter((s: MovieInterface) => s.id !== movie.id)
+        payload: state.favorites.filter(
+          (s: MovieInterface) => s.id !== movie.id
+        )
       });
     } else {
       return dispatch({
@@ -57,8 +59,7 @@ const MovieDetail = (props: RouteComponentProps<TParams>) => {
   }
 
   const { selectedMovie: movie, selectedMovieCast: cast, favorites } = state;
- console.log("state ", state);
-
+  console.log("state ", state);
 
   // parse the premier year of the movie
   let year = moment(movie.premiered, "YYYY-MM-DD").year();
@@ -67,38 +68,42 @@ const MovieDetail = (props: RouteComponentProps<TParams>) => {
 
   return (
     <div className={styles.content}>
-      <div className={styles.backgroundImage}>
-        <div className={styles.moviedetailUp}>
-          <div className={styles.titleAndYear}>
-            <h2 onClick={() => toggleFavorite(movie)} className={styles.name}>{movie.name}</h2>
-            <span className={styles.year}>{year}</span>
-          </div>
-          <div className={styles.favoriteButtonSection}>
-            <button
-              type="button"
-              title={
-                favorites.includes(movie)
-                  ? "Remove from favories"
-                  : "Add to favorites"
-              }
-              style={
-                favorites.includes(movie)
-                  ? { backgroundColor: "rgb(240, 188, 17)", color: "#000" }
-                  : { backgroundColor: "#3d3d3d", color: "#fff" }
-              }
-              onClick={() => toggleFavorite(movie)}
-            >
-              <i className="fa fa-heart" />
-            </button>
-           <span style={{color: "white"}}>
-           	Add to Favorites
-           </span>
-          </div> 
+      <div className={styles.movieImage}>
+        <img src={movie.image.original} alt="" />
+      </div>
+      <div className={styles.movieInfo}>
+        <div className={styles.movieTitle}>
+          <span className={styles.title}>{movie.name}</span>
+          <span className={styles.year}>{year}</span>
         </div>
-        <div className={styles.movie}>
-          <div className={styles.movieImage} />
-          <div className={styles.movieDetail} />
+        <div className={styles.favorite}>
+          <button
+            type="button"
+            title={
+              favorites.includes(movie)
+                ? "Remove from favories"
+                : "Add to favorites"
+            }
+            style={
+              favorites.includes(movie)
+                ? {
+                    color: "rgb(240, 188, 17)",
+                    borderColor: "rgb(240, 188, 17)"
+                  }
+                : { color: "#fff" }
+            }
+            onClick={() => toggleFavorite(movie)}
+          >
+            <i className="fa fa-heart" />
+          </button>
+          <span className={styles.favoriteButtonText}>
+            {favorites.includes(movie)
+              ? "Remove from the favorites"
+              : "Add to the favorites"}
+          </span>
         </div>
+
+        <div className={styles.summary}>{ReactHtmlParser(movie.summary)}</div>
       </div>
     </div>
     // <div className={styles["content"]}>

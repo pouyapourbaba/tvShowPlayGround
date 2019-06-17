@@ -2,77 +2,69 @@
 @import "./variables";
 
 .content {
-  width: 100%;
-}
-.backgroundImage {
-  height: 528px;
-  width: 100%;
+  background-image: url("http://haintheme.com/demo/html/bustter/images/uploads/hero-bg.jpg");
+  background-size: 100% 598px;
+  background-repeat: no-repeat;
+  background-position: top 100%;
+  min-height: 598px;
+  display: grid;
+  grid-gap: 50px;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: 50px auto;
   position: relative;
-  display: block;
-  background: url("../images/background2.jpg") left 10% bottom 20% / cover
-    no-repeat border-box;
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  .moviedetailUp {
-    border: 1px solid pink;
-    grid-column: 5 / 12;
-    height: 50%;
-    align-self: end;
-    padding: 10px 30px;
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-auto-rows: minmax(auto,40px);
-    grid-gap: 10px
-  }
-  .moviedetailUp .titleAndYear {
-    grid-column: 1 / -1;
-    display: flex;
-    flex-direction: row;
-    border: 1px solid red;
-  }
-  .moviedetailUp .titleAndYear .name {
-    padding: 0;
-    margin: 0;
-    font-size: 2rem;
-    color: $backgroundLightGrey;
-    align-self: baseline;
-  }
-  .moviedetailUp .titleAndYear .year {
-    font-size: 1.3rem;
-    margin-left: 20px;
-    color: #999;
-    align-self: baseline;
-  }
-  .moviedetailUp .favoriteButtonSection {
-    border: blue 1px solid;
-    grid-column: 1 / -1;
-  }
-  .moviedetailUp .favoriteButtonSection button {
-    height: 100%;
-    font-size: 2rem;
-    padding-top: 4px;
-    outline: none;
-    border: none;
-    border-radius: 48%;
-    background-color: transparent;
-  }
 }
-.movie {
-  border: 1px solid yellow;
-  height: 400px;
-  width: 100%;
-  position: absolute;
-  margin-top: 250px;
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
 
-  .movieImage {
-    border: 1px solid red;
-    grid-column: 2 / 5;
+.movieImage {
+  grid-column: 2 / 5;
+  grid-row: 2 / -1;
+  height: 500px;
+  background-color: bisque;
+  position: sticky;
+  top: 10px;
+}
+
+.movieInfo {
+  grid-column: 5 / 12;
+  grid-row: 2 / -1;
+  height: 1000px;
+  font-weight: 600;
+  color: #fff;
+  & > * {
+    margin-bottom: 30px;
   }
-  .movieDetail {
-    // border: 1px solid pink;
-    // grid-column: 5 / 12;
+  .movieTitle {
+    font-size: 2rem;
+  }
+  .movieTitle .year {
+    color: #999;
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-left: 5px;
+  }
+
+  .favorite {
+  }
+  .favorite button {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    border: 1px solid #fff;
+    font-size: 1.2rem;
+    padding-top: 3px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 20px;
+  }
+  .favorite .favoriteButtonText {
+    font-size: 1.1rem;
+    font-weight: 300;
+  }
+
+  .summary {
+    line-height: 1.5rem;
+    font-weight: 300;
+    font-size: 1.1rem;
   }
 }
 

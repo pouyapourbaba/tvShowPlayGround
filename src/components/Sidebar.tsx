@@ -1,5 +1,7 @@
 import * as React from "react";
+import axios from "axios";
 import styles from "../styles/Sidebar.module.scss";
+import { Link } from "react-router-dom";
 import { Context } from "./../Store";
 import { ScheduleInterface, MovieInterface } from "../types/interfaces";
 // import { __RouterContext } from "react-router";
@@ -12,11 +14,27 @@ const Sidebar: React.SFC<SidebarProps> = props => {
   type ChangeEvent = React.ChangeEvent<HTMLInputElement>;
 
   const [searchInput, setSearchInput] = React.useState<string>("");
-  const { state } = React.useContext(Context);
+  const { state, dispatch } = React.useContext(Context);
 
   // hook to the router context
   // gives us access to the history, location, and match objects
   // const routerContext = React.useContext(__RouterContext);
+
+  const setSelectedMovie = async (movie: MovieInterface) => {
+    dispatch({
+      type: "SET_SELECTED_MOVIE",
+      payload: movie
+    });
+
+    const url = `https://api.tvmaze.com/shows/${movie.id}/cast`;
+    const response = await axios.get(url);
+    const results = response.data;
+
+    dispatch({
+      type: "SET_SELECTED_MOVIE_CAST",
+      payload: results
+    });
+  };
 
   const handleChange = (e: ChangeEvent): void => {
     setSearchInput(e.target.value);
@@ -88,7 +106,7 @@ const Sidebar: React.SFC<SidebarProps> = props => {
       </div>
 
       <section className={styles.scheduleBasedOnNetwork}>
-          <h2>Scheduled for today in {country}</h2>
+        <h2>Scheduled for today in {country}</h2>
         <ScrollArea
           speed={0.3}
           className="area"
@@ -105,7 +123,16 @@ const Sidebar: React.SFC<SidebarProps> = props => {
                   (movie: MovieInterface) => (
                     <div key={movie.id} className={styles.networkDetails}>
                       <span className={styles.time}>{movie.schedule.time}</span>
-                      <span className={styles.name}>{movie.name}</span>
+
+                      <span className={styles.name}>
+                        <Link
+                          onClick={() => setSelectedMovie(movie)}
+                          to={`/movie/${String(movie.id)}`}
+                          className={styles.link}
+                        >
+                          {movie.name}
+                        </Link>
+                      </span>
                     </div>
                   )
                 )}
