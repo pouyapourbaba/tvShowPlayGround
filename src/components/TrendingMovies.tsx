@@ -39,10 +39,24 @@ const TrendingMovies: React.SFC<TrendingMoviesProps> = () => {
     const url = `https://api.tvmaze.com/shows/${movie.id}/cast`;
     const response = await axios.get(url);
     const results = response.data;
+    console.log("results ", results);
+
+    // remove the duplicated casts
+    function removeDuplicated(arr: any, key = "id") {
+      const map = new Map();
+      arr.map((el: any) => {
+        if (!map.has(el.person[key])) {
+          map.set(el.person[key], el);
+        }
+      });
+      return Array.from(map.values());
+    }
+    const uniqueCasts = removeDuplicated(results);
+    console.log("uniqueCasts ", uniqueCasts);
 
     dispatch({
       type: "SET_SELECTED_MOVIE_CAST",
-      payload: results
+      payload: uniqueCasts
     });
   };
 
@@ -70,15 +84,17 @@ const TrendingMovies: React.SFC<TrendingMoviesProps> = () => {
       payload: uniqueShcedules
     });
 
-    let country: string = "";
-    if (countryCode === "US") country = "USA";
-    if (countryCode === "GB") country = "United Kingdoms";
-    if (countryCode === "JP") country = "Japan";
-    if (countryCode === "RU") country = "Russia";
-    if (countryCode === "KR") country = "Korea";
+    let countryName: string = "";
+    if (countryCode === "US") countryName = "USA";
+    if (countryCode === "GB") countryName = "United Kingdoms";
+    if (countryCode === "JP") countryName = "Japan";
+    if (countryCode === "RU") countryName = "Russia";
+    if (countryCode === "KR") countryName = "Korea";
+    const country = { name: countryName, code: countryCode };
     dispatch({
       type: "SET_COUNTRY",
       payload: country
+      // payload: countryName
     });
   };
 
@@ -91,8 +107,8 @@ const TrendingMovies: React.SFC<TrendingMoviesProps> = () => {
 
   React.useEffect(() => {
     // Default page shows schedule for USA
-    const country = state.country ? state.country : "US";
-    handleFetchTrendingMovies(country);
+    const countryCode = state.country.code ? state.country.code : "US";
+    handleFetchTrendingMovies(countryCode);
   }, []);
 
   const { schedule } = state;
@@ -114,7 +130,9 @@ const TrendingMovies: React.SFC<TrendingMoviesProps> = () => {
           ref={selectRef}
           onChange={handleSUbmit}
         >
-          <option value="US">USA</option>
+          <option value="US" selected={true}>
+            {"USA"}
+          </option>
           {/* <option value="AU">Austrailia</option> */}
           <option value="JP">Japan</option>
           <option value="KR">Korea, Republic of</option>
@@ -163,7 +181,7 @@ const TrendingMovies: React.SFC<TrendingMoviesProps> = () => {
               <div className={styles.detailsImage}>
                 <Link
                   onClick={() => setSelectedMovie(movie.show)}
-                  to={`/movie/${String(movie.id)}`}
+                  to={`/movie/${String(movie.show.id)}`}
                 >
                   <img src={movie.show.image.original} alt="" />
                 </Link>

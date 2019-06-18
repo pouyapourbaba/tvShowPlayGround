@@ -22,6 +22,7 @@ const initialState: AppContextInterface = {
 
 function App(): JSX.Element {
   const [state, dispatch] = React.useReducer(reducer, initialState);
+ console.log("state ", state);
 
   return (
     <AppContextProvider value={{ state, dispatch }}>
