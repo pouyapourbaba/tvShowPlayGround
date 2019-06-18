@@ -34,6 +34,8 @@ const MovieCard: React.SFC<MovieCardProps> = ({
     });
   };
 
+  console.log("search",searchResult)
+
   return (
     <React.Fragment>
       <p className={styles["search-result-number"]}>

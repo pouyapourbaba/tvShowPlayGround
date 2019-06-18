@@ -45,10 +45,24 @@ const MovieDetail = (props: RouteComponentProps<TParams>) => {
     // fetch the cast
     const urlCast = `https://api.tvmaze.com/shows/${resultsMovie.id}/cast`;
     const responseCast = await axios.get(urlCast);
-    const resultsCast = responseCast.data;
+    const resultsCast: CastInterface = responseCast.data;
+
+    // remove the duplicated casts
+    function removeDuplicated(arr: any, key = "id") {
+      const map = new Map();
+      arr.map((el: any) => {
+        if (!map.has(el.person[key])) {
+          map.set(el.person[key], el);
+        }
+      });
+      return Array.from(map.values());
+    }
+    const uniqueCasts = removeDuplicated(resultsCast);
+ console.log("uniqueCasts ", uniqueCasts);
+
     dispatch({
       type: "SET_SELECTED_MOVIE_CAST",
-      payload: resultsCast
+      payload: uniqueCasts
     });
   };
 
@@ -58,13 +72,15 @@ const MovieDetail = (props: RouteComponentProps<TParams>) => {
     return <div />;
   }
 
-  const { selectedMovie: movie, selectedMovieCast: cast, favorites } = state;
-  console.log("state ", state);
-
+  const { selectedMovie: movie, selectedMovieCast: casts, favorites } = state;
+  const cast = casts.length > 10 ? casts.slice(0, 10) : casts;
   // parse the premier year of the movie
   let year = moment(movie.premiered, "YYYY-MM-DD").year();
 
   // const relatedMovies = state.movies.filter((m: MovieInterface) => m !== movie);
+
+  if (_.isEmpty(movie)) return <div>Loading data</div>;
+  console.log("not initial cast",cast.map((cast: CastInterface) => cast.person));
 
   return (
     <div className={styles.content}>
@@ -104,9 +120,34 @@ const MovieDetail = (props: RouteComponentProps<TParams>) => {
         </div>
 
         <div className={styles.summary}>{ReactHtmlParser(movie.summary)}</div>
+        <div className={styles.cast}>
+          <span className={styles.castHeading}>Cast</span>
+          {cast.map((cast: CastInterface) => (
+            <div className={styles.castCard}>
+              <div className={styles.castImage}>
+                <img src={cast.person.image ? cast.person.image.original : "https://via.placeholder.com/150.jpg"} alt="" />
+              </div>
+              <div className={styles.castInfo}>
+                <div>
+                  <span className={styles.personName}>{cast.person.name}</span>{" "}
+                  as{" "}
+                  <span className={styles.characterName}>
+                    {cast.character.name}
+                  </span>
+                </div>
+                <div>
+                  Birthday:{" "}
+                  <span className={styles.birthday}>
+                    {cast.person.birthday}
+                  </span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
-    // <div className={styles["content"]}>
+    //   <div className={styles["content"]}>
     //   <h1>{movie.name ? movie.name : "N/A"}</h1>
     //   <div className={styles["image-container"]}>
     //     <img src={movie.image.original} alt="" />

@@ -106,16 +106,16 @@ const Sidebar: React.SFC<SidebarProps> = props => {
       </div>
 
       <section className={styles.scheduleBasedOnNetwork}>
-        <h2>Scheduled for today in {country}</h2>
+        <h2>Scheduled for today in {country.name}</h2>
         <ScrollArea
           speed={0.3}
           className="area"
           contentClassName="content"
           horizontal={false}
         >
-          {networkList.map(network => {
+          {networkList.map((network, index: number) => {
             return (
-              <div className={styles.eachNetwork}>
+              <div key={index} className={styles.eachNetwork}>
                 <div className={styles.netowrkTitle}>
                   <span>{network}</span>
                 </div>
