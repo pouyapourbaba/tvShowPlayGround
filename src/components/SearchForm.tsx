@@ -1,13 +1,14 @@
 import React from "react";
 import axios from "axios";
-import _ from "lodash";
 import styles from "../styles/SearchForm.module.scss";
-import { Context, AppActionInterface } from "./../Store";
+import { Context } from "./../Store";
 import { MovieInterface, ResponseInterface } from "../types/interfaces";
-import { __RouterContext } from 'react-router';
+import { __RouterContext } from "react-router";
 
 export interface SearchFormProps {
   className: string;
+  searchFor: string;
+  valueText: string;
 }
 
 type FormElem = React.FormEvent<HTMLFormElement>;
@@ -15,8 +16,8 @@ type ChangeEvent = React.ChangeEvent<HTMLInputElement>;
 
 const SearchForm: React.SFC<SearchFormProps> = props => {
   const [searchInput, setSearchInput] = React.useState<string>("");
-  const { state, dispatch } = React.useContext(Context);
-  
+  const { dispatch } = React.useContext(Context);
+
   // hook to the router context
   // gives us access to the history, location, and match objects
   const routerContext = React.useContext(__RouterContext);
@@ -27,16 +28,14 @@ const SearchForm: React.SFC<SearchFormProps> = props => {
 
   const handleSearchMovies = async (e: FormElem) => {
     e.preventDefault();
-    
-    const url = `http://api.tvmaze.com/search/shows?q=${searchInput}`;
+
+    const url = `https://api.tvmaze.com/search/${
+      props.searchFor
+    }?q=${searchInput}`;
     const response = await axios.get(url);
     const results = response.data;
     const movies = results.map((result: ResponseInterface) => result.show);
     setSearchInput("");
-    
-    // if (_.isEmpty(movies)) {
-    //   console.log("<h3>No Movies Found...</h3>");
-    // }
 
     // filter the movies without images
     const filteredMovies = movies.filter(
@@ -53,20 +52,21 @@ const SearchForm: React.SFC<SearchFormProps> = props => {
       payload: searchInput
     });
 
-    // redirect to the 
-    routerContext.history.push(`/search/${searchInput}`)
+    // redirect to the
+    routerContext.history.push(`/search/${searchInput}`);
   };
 
   return (
-    <form onSubmit={handleSearchMovies} className={styles["form"]}>
+    <form onSubmit={handleSearchMovies} className={styles.form}>
       <input
+        className={styles.input}
         type="text"
-        placeholder="Search tv shows.."
+        placeholder={props.valueText}
         onChange={handleChange}
         value={searchInput}
         required
       />
-      <button type="submit">
+      <button type="submit" className={styles.button}>
         <i className="fa fa-search" />
       </button>
     </form>

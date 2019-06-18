@@ -1,10 +1,14 @@
 import React from "react";
+import { MovieInterface, ScheduleInterface } from "./types/interfaces";
 
 export interface AppContextInterface {
-    movies: [];
+    movies: MovieInterface[] | [];
     favorites: [];
     selectedMovie: any;
     searchQuery: string;
+    selectedMovieCast: [];
+    schedule: ScheduleInterface[] | [];
+    country: string;
 }
 
 export interface AppActionInterface {
@@ -16,7 +20,10 @@ const initialState: AppContextInterface = {
     movies: [],
     favorites: [],
     selectedMovie: {},
-    searchQuery: ""
+    selectedMovieCast: [],
+    searchQuery: "",
+    schedule: [],
+    country: ""
 }
 
 export const Context = React.createContext<AppContextInterface | any>(initialState);
@@ -28,12 +35,18 @@ export const reducer = (state: AppContextInterface, action: AppActionInterface):
     switch (action.type) {
         case "SEARCH_MOVIE":
             return { ...state, movies: action.payload }
+        case "FETCH_SCHEDULE":
+            return { ...state, schedule: action.payload }
         case "TOGGLE_FAVORITE":
             return { ...state, favorites: action.payload }
         case "SET_SELECTED_MOVIE":
             return { ...state, selectedMovie: action.payload }
         case "SET_SEARCH_QUERY":
             return { ...state, searchQuery: action.payload }
+        case "SET_SELECTED_MOVIE_CAST":
+            return { ...state, selectedMovieCast: action.payload }
+        case "SET_COUNTRY":
+            return { ...state, country: action.payload }
         default:
             return state;
     }

@@ -1,48 +1,105 @@
 @import "./variables";
 
-form {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: flex-end;
-  width: 100%;
-  border-radius: 5px;
-  background-color: #fff;
+.form {
+  position: relative;
+  height: 100%;
 }
 
-input {
-  flex: 1 1 70%;
-  padding: 15px 25px;
-  font-size: 16px;
-  color: #000;
-  box-sizing: border-box;
-  border-radius: 5px;
+.select {
+  display: inline-block;
+  height: 100%;
+  font-size: 1rem;
   border: none;
+  background: #222;
+  color: $navbarFontColor;
+  line-height: 1.3;
+  padding: 0em 2em 0em 1em;
+  border-right: #999 solid 1px;
+}
+.select:focus {
+  border-color: #aaa;
+  color: #fff;
+}
+.select option {
+  height: 100%;
+  font-size: 1.2rem;
+}
+
+.select::-ms-expand {
+  display: none;
+}
+.select:hover {
+  border-color: #888;
+}
+.select:focus {
+  box-shadow: 0 0 0 3px -moz-mac-focusring;
   outline: none;
 }
 
-button {
-  flex: 1 1 10%;
-  height: 35px;
-  margin: 7px 7px 0 0;
-  background-color: $backgroundYellow;
-  border-radius: 3px;
-  box-sizing: border-box;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
+.input {
+  background-color: #222;
+  font-size: 1.1rem;
+  outline: none;
   border: none;
+  height: 100%;
+  width: 400px;
+  padding-left: 10px;
+  color: $navbarFontColor;
+}
+.button {
+  position: absolute;
+  font-size: 1.6rem;
+  right: 5px;
+  top: 10px;
+  background-color: #222;
+  border: none;
+  outline: none;
+  color: $navbarFontColor;
 }
 
-@media screen and (min-width: 768) {
-  button {
-    flex: 1 1 3%;
-  }
-  form {
-    // display: flex;
-    // flex-flow: row nowrap;
-    // justify-content: flex-end;
-    // width: calc(100% - 20px);
-    // border-radius: 5px;
-    // background-color: #fff;
-  }
-}
+// form {
+//   display: flex;
+//   flex-flow: row nowrap;
+//   justify-content: flex-end;
+//   width: 100%;
+//   border-radius: 5px;
+//   background-color: #fff;
+// }
+
+// input {
+//   flex: 1 1 70%;
+//   padding: 15px 25px;
+//   font-size: 16px;
+//   color: #000;
+//   box-sizing: border-box;
+//   border-radius: 5px;
+//   border: none;
+//   outline: none;
+// }
+
+// button {
+//   flex: 1 1 10%;
+//   height: 35px;
+//   margin: 7px 7px 0 0;
+//   background-color: $backgroundYellow;
+//   border-radius: 3px;
+//   box-sizing: border-box;
+//   font-size: 16px;
+//   font-weight: 600;
+//   cursor: pointer;
+//   border: none;
+// }
+
+// @media screen and (min-width: 768) {
+//   button {
+//     flex: 1 1 3%;
+//   }
+//   form {
+//     // display: flex;
+//     // flex-flow: row nowrap;
+//     // justify-content: flex-end;
+//     // width: calc(100% - 20px);
+//     // border-radius: 5px;
+//     // background-color: #fff;
+//   }
+// }

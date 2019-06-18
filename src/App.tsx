@@ -1,6 +1,5 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-import axios from "axios";
 import styles from "./App.module.scss";
 import SearchShow from "./components/SearchShow";
 import Home from "./components/Home";
@@ -9,17 +8,21 @@ import MovieDetail from "./components/MovieDetail";
 import Navbar from "./components/Navbar";
 import { AppContextProvider, AppContextInterface, reducer } from "./Store";
 import "font-awesome/css/font-awesome.css";
+import Actor from "./components/Actor";
 
 const initialState: AppContextInterface = {
   movies: [],
   favorites: [],
   selectedMovie: {},
-  searchQuery: ""
+  selectedMovieCast: [],
+  searchQuery: "",
+  schedule: [],
+  country: ""
 };
 
 function App(): JSX.Element {
   const [state, dispatch] = React.useReducer(reducer, initialState);
-  console.log("state ", state);
+ console.log("state ", state);
 
   return (
     <AppContextProvider value={{ state, dispatch }}>
@@ -30,14 +33,19 @@ function App(): JSX.Element {
         <main>
           <Switch>
             <Route path="/favorites" component={Favorites} />
+            <Route path="/actor/:index" component={Actor} />
             <Route path="/search/:query" component={SearchShow} />
-            <Route path="/movies/:id" component={MovieDetail} />
+            <Route path="/movie/:id" component={MovieDetail} />
             <Route exact path="/" component={Home} />
             <Redirect to="/not-found" />
           </Switch>
         </main>
         <footer>
           <p>&copy; Pouya Pourbaba</p>
+          <p>
+            This website is powered by data from{" "}
+            <a href="https://www.tvmaze.com/api">TVmaze API</a>.
+          </p>
         </footer>
       </div>
     </AppContextProvider>

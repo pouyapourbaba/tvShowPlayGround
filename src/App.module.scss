@@ -4,18 +4,29 @@
 // import scss variables
 @import "styles/variables";
 
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 14px;
+}
+
 body {
-  background-color: $backgroundGrey;
+  background-color: white;
   margin: 0;
   padding: 0;
   font-family: "Montserrat", sans-serif;
+  background-color: $backgroundDarkGrey;
 }
 
 .App {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: auto 70px;
-  font-weight: 600;
+  // font-weight: 600;
 }
 
 header {
@@ -27,21 +38,22 @@ header {
 }
 
 main {
-  grid-column: 2 / 12;
-  background-color: $backgroundLightYello;
-  border: 1px solid rgb(212, 212, 212);
-  margin-top: 100px;
+  grid-column: 1 / 13;
+  margin-top: 140px;
   margin-bottom: 20px;
-  min-height: calc(100vh - 192px);
+  min-height: calc(100vh - 232px);
 }
 
 footer {
-  background-color: $backgroundDarkGrey;
+  background-color: $backgroundNavbar;
   grid-column: 1 / -1;
   color: #fff;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   font-weight: 400;
 }
 
+footer a {
+  color: $backgroundYellow;
+}
