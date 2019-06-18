@@ -39,11 +39,24 @@ const TrendingMovies: React.SFC<TrendingMoviesProps> = () => {
     const url = `https://api.tvmaze.com/shows/${movie.id}/cast`;
     const response = await axios.get(url);
     const results = response.data;
- console.log("results ", results);
+    console.log("results ", results);
+
+    // remove the duplicated casts
+    function removeDuplicated(arr: any, key = "id") {
+      const map = new Map();
+      arr.map((el: any) => {
+        if (!map.has(el.person[key])) {
+          map.set(el.person[key], el);
+        }
+      });
+      return Array.from(map.values());
+    }
+    const uniqueCasts = removeDuplicated(results);
+    console.log("uniqueCasts ", uniqueCasts);
 
     dispatch({
       type: "SET_SELECTED_MOVIE_CAST",
-      payload: results
+      payload: uniqueCasts
     });
   };
 
@@ -77,10 +90,10 @@ const TrendingMovies: React.SFC<TrendingMoviesProps> = () => {
     if (countryCode === "JP") countryName = "Japan";
     if (countryCode === "RU") countryName = "Russia";
     if (countryCode === "KR") countryName = "Korea";
-    const country = {name: countryName, code: countryCode}
+    const country = { name: countryName, code: countryCode };
     dispatch({
       type: "SET_COUNTRY",
-      payload: country,
+      payload: country
       // payload: countryName
     });
   };
@@ -117,7 +130,9 @@ const TrendingMovies: React.SFC<TrendingMoviesProps> = () => {
           ref={selectRef}
           onChange={handleSUbmit}
         >
-          <option value="US" selected={true}>{"USA"}</option>
+          <option value="US" selected={true}>
+            {"USA"}
+          </option>
           {/* <option value="AU">Austrailia</option> */}
           <option value="JP">Japan</option>
           <option value="KR">Korea, Republic of</option>
