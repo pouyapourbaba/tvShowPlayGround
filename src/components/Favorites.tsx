@@ -21,27 +21,43 @@ const Favorites = (): JSX.Element => {
   };
 
   if (state.favorites.length === 0)
-    return <h3 className={styles["no-favs"]}>There are no favorite movies.</h3>;
+    return (
+      <div className={styles.content}>
+        <h2 className={styles["no-favs"]}>
+          There are no movies in the favorites.
+        </h2>
+      </div>
+    );
 
   return (
-    <div className={styles["favorites"]}>
-      {state.favorites.reverse().map((fav: MovieInterface) => (
-        <div className={styles["favorite-movie"]}>
-          <div className={styles["favorite-header"]}>
-            <h3>{fav.name}</h3>
-            <p>Premiered on:<br/>{fav.premiered}</p>
-            <p>Status:<br/>{fav.status}</p>
-          </div>
-          {fav.image && (
-            <div className={styles["image"]}>
-              <img src={fav.image.original} alt="" />
-              <button type="button" onClick={() => toggleFavorite(fav)}>
-                <i className="fa fa-star" />
-              </button>
+    <div className={styles.content}>
+      <div className={styles.favorites}>
+        {state.favorites.reverse().map((fav: MovieInterface) => (
+          <div className={styles["favorite-movie"]}>
+            <div className={styles["favorite-header"]}>
+              <h3>{fav.name}</h3>
+              <p>
+                Premiered on:
+                <br />
+                {fav.premiered}
+              </p>
+              <p>
+                Status:
+                <br />
+                {fav.status}
+              </p>
             </div>
-          )}
-        </div>
-      ))}
+            {fav.image && (
+              <div className={styles["image"]}>
+                <img src={fav.image.original} alt="" />
+                <button type="button" onClick={() => toggleFavorite(fav)}>
+                  <i className="fa fa-heart" />
+                </button>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
