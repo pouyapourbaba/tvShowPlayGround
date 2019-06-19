@@ -51,6 +51,7 @@ const SearchShow = (props: RouteComponentProps<TParams>): JSX.Element => {
       searchResult={state.movies}
       favorites={state.favorites}
       toggleFavorite={toggleFavorite}
+      searchQuery={props.match.params.query}
     />
   );
 };

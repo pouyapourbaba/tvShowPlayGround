@@ -9,12 +9,14 @@ export interface MovieCardProps {
   searchResult: MovieInterface[];
   favorites: MovieInterface[];
   toggleFavorite?: any;
+  searchQuery: string;
 }
 
 const MovieCard: React.SFC<MovieCardProps> = ({
   searchResult,
   favorites,
-  toggleFavorite
+  toggleFavorite,
+  searchQuery
 }): JSX.Element => {
   const { state, dispatch } = React.useContext(Context);
 
@@ -34,13 +36,14 @@ const MovieCard: React.SFC<MovieCardProps> = ({
     });
   };
 
-  console.log("search",searchResult)
+  console.log("search", searchResult);
 
   return (
-    <React.Fragment>
-      <p className={styles["search-result-number"]}>
-        {state.movies.length} results found for "{state.searchQuery}":{" "}
-      </p>
+    <div className={styles.content}>
+      <h2 className={styles["search-result-number"]}>
+        {state.movies.length} results found for "
+        {state.searchQuery || searchQuery}":{" "}
+      </h2>
       <div className={styles["movies"]}>
         {searchResult.map((movie: MovieInterface) => (
           <div key={movie.id} className={styles["movie"]}>
@@ -56,28 +59,12 @@ const MovieCard: React.SFC<MovieCardProps> = ({
                   <p>{movie.name}</p>
                   <p>Status: {movie.status}</p>
                 </div>
-                <button
-                  type="button"
-                  title={
-                    favorites.includes(movie)
-                      ? "Remove from favories"
-                      : "Add to favorites"
-                  }
-                  style={
-                    favorites.includes(movie)
-                      ? { backgroundColor: "rgb(240, 188, 17)", color: "#000" }
-                      : { backgroundColor: "#3d3d3d", color: "#fff" }
-                  }
-                  onClick={() => toggleFavorite(movie)}
-                >
-                  <i className="fa fa-star" />
-                </button>
               </div>
             )}
           </div>
         ))}
       </div>
-    </React.Fragment>
+    </div>
   );
 };
 

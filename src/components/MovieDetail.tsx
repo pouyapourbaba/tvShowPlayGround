@@ -122,7 +122,7 @@ const MovieDetail = (props: RouteComponentProps<TParams>) => {
         <div className={styles.summary}>{ReactHtmlParser(movie.summary)}</div>
         <div className={styles.cast}>
           <span className={styles.castHeading}>Cast</span>
-          {_.isEmpty(cast) ? <div>Cast Information not available</div> : cast.map((cast: CastInterface) => (
+          {_.isEmpty(cast) ? <div className={styles.noCast}>Cast Information not available</div> : cast.map((cast: CastInterface) => (
             <div className={styles.castCard}>
               <div className={styles.castImage}>
                 <img src={cast.person.image ? cast.person.image.original : "https://via.placeholder.com/150.jpg"} alt="" />
