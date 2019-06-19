@@ -3,55 +3,33 @@
 // * Search Results
 // */
 .content {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
 }
 
 .search-result-number {
-  padding: 5px 15px;
-  margin-left: 30px;
-  background-color: $backgroundYellow;
-  display: inline-block;
-  color: #000;
-  border-radius: 4px;
-}
-
-.favorites-sidebar {
-  background-color: #fff;
-  flex: 1 1 20%;
-  height: calc(100vh - 40px);
-  margin-top: 20px;
-  border-radius: 8px;
-  overflow: scroll;
-  position: -webkit-sticky;
-  position: sticky;
-  top: 10px;
-  align-self: flex-start;
+  grid-column: 2 / 12;
+  padding: 5px 0px;
+  color: #fff;
 }
 
 .movies {
-  // flex: 1 1 80%;
-  // display: flex;
-  // flex-flow: row wrap;
-  // justify-content: space-evenly;display: grid;
+  grid-column: 2 / 12;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  grid-gap: 10px;
+  grid-template-columns: repeat(4, (100% / 4));
 }
 
 .movie {
-  flex: 0 0 0%;
-  display: flex;
-  flex-flow: row wrap;
-  margin: 2px 2px;
+  width: 100%;
   font-family: "Montserrat", sans-serif;
-  justify-content: center;
 }
 .movie .information {
   flex: 1 1 40%;
   padding: 0 14px;
 }
-.movie .imgage img {
-  // flex: 1 1 100%;
-  // width: 100%;
+.movie .image {
+  width: 100%;
 }
 
 .title-favorite {
@@ -72,28 +50,6 @@
   flex: 1 1 70%;
 }
 
-.title-favorite button {
-  flex: 1 1 10px;
-  height: 30px;
-  border: none;
-  background-color: #fff;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.title-favorite button:hover {
-  background-color: rgb(226, 226, 226);
-  border: none;
-  outline: none;
-}
-.title-favorite button:focus {
-  background-color: #fff;
-  border: none;
-  outline: none;
-}
-
-.favorites-sidebar {
-}
 
 // @media only screen and (min-width: 449px) and (max-width: 900px) {
 //   .search-form {
@@ -122,17 +78,6 @@
   text-align: left;
   color: white;
   width: 150px;
-
-  img {
-    width: 100%;
-  }
-
-  button {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    background-color: $backgroundYellow;
-  }
 }
 
 .info {
@@ -143,7 +88,7 @@
   left: 0px;
   background-color: rgba(0, 0, 0, 0.7);
   font-weight: 400;
-  font-size: 12px;
+  font-size: 1.2rem;
 }
 
 .info > * {
@@ -166,16 +111,16 @@
   //   flex: 0 0 100%;
   // }
 
-  .movies {
-    display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-  }
+  // .movies {
+  //   display: grid;
+  // grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  // }
 
-  .image {
-    width: 250px;
+  // .image {
+  //   width: 250px;
 
-    img {
-      width: 100%;
-    }
-  }
+  //   img {
+  //     width: 100%;
+  //   }
+  // }
 }

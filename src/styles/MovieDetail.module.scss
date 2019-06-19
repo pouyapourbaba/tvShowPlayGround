@@ -70,13 +70,17 @@
     color: #999;
   }
 
-  .cast {
+  .cast .noCast {
+    margin-top: 30px;
+    color: #999;
+    font-weight: 300;
+    font-size: 1.5rem;
   }
   .cast .castHeading {
     font-size: 1.5rem;
     border-bottom: 1px solid #999;
     display: block;
-    padding: 5px 15px;
+    padding: 5px 0px;
   }
   .cast .castCard {
     margin: 20px 0;
