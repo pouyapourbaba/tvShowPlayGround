@@ -23,7 +23,7 @@
     "react-html-parser": "^2.0.2",
     "react-perfect-scrollbar": "^1.5.3",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "3.0.1",
+    "react-scripts": "5.0.1",
     "react-scrollbar": "^0.5.6",
     "react-slick": "^0.24.0",
     "react-whirligig": "^6.5.13",
